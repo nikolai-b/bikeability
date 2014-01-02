@@ -1,5 +1,22 @@
 Bikeability::Application.routes.draw do
-  # The priority is based upon order of creation: first created -> highest priority.
+  devise_for :users
+  root 'welcome#index'
+
+  resources :school_teachers
+
+  #get index
+  #get id show
+
+  #get new new
+  #post create
+
+  #get id/edit edit
+  #put id update
+
+  #delete id destroy
+
+
+ # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"

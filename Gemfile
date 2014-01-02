@@ -6,6 +6,23 @@ gem 'rails', '4.0.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 gem 'rspec-rails'
+gem 'capybara'
+gem 'devise'
+gem 'haml'
+gem 'pg'
+
+group :test do
+  gem 'fabricator'
+  gem 'launchy'
+end
+
+group :production do
+  gem "rake", "~> 10.1.1"
+  gem "rails_12factor", "~> 0.0"
+  gem "non-stupid-digest-assets", "~> 1.0"
+  gem "rails_serve_static_assets", "~> 0.0"
+end
+
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
