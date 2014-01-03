@@ -1,6 +1,6 @@
 %h1 Editing booking_email
 
-= form_for :booking_email do |f|
+= form_for :booking_email, url: school_teacher_booking_emails_path(@school_teacher) do |f|
   .field
     = f.label :body
     = f.text_area :body, value: @body

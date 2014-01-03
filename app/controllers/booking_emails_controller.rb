@@ -3,18 +3,25 @@ class BookingEmailsController < ApplicationController
     @body = BookingEmailTemplate.email_body_for(school_teacher)
   end
 
+  def show
+
+  end
+
   def create
-    #send the email
+    body = booking_email_params[:body]
+    email = BookingEmailMailer.booking_email(school_teacher, current_user, body)
+
+    email.deliver
+
+    flash[:notice] = "Email sent"
+
+    redirect_to root_path
   end
 
   private
 
   def school_teacher
-    SchoolTeacher.find params[:school_teacher_id]
-  end
-
-  def booking_email
-    @booking_email ||= BookingEmail.singular
+    @school_teacher ||= SchoolTeacher.find params[:school_teacher_id]
   end
 
   def booking_email_params

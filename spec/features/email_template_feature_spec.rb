@@ -1,6 +1,6 @@
 require 'capybara_helper'
 
-feature "Create a booking email template", type: :feature do
+feature "Create a booking email", type: :feature do
   scenario "edit booking email template" do
     sign_in :admin
 
@@ -25,5 +25,12 @@ feature "Create a booking email template", type: :feature do
 
       Nice email
     EMAIL
+
+
+    ActionMailer::Base.deliveries.count.should == 0
+
+    click_on "Send email"
+
+    ActionMailer::Base.deliveries.count.should == 1
   end
 end
