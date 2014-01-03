@@ -9,6 +9,10 @@ gem 'devise'
 gem 'haml'
 gem 'pg'
 
+group :development, :test do
+  gem 'byebug'
+end
+
 group :test do
   gem 'fabricator'
   gem 'launchy'
