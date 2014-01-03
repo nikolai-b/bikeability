@@ -1,8 +1,12 @@
 Bikeability::Application.routes.draw do
+  resource :booking_email_template
+
   devise_for :users
   root 'welcome#index'
 
-  resources :school_teachers
+  resources :school_teachers do
+    resources :booking_emails
+  end
 
   #get index
   #get id show

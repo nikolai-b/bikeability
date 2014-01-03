@@ -6,10 +6,11 @@ gem 'rails', '4.0.2'
 gem 'rspec-rails'
 gem 'capybara'
 gem 'devise'
-gem 'haml'
+gem 'haml-rails'
 gem 'pg'
 
 group :development, :test do
+  gem 'zeus'
   gem 'byebug'
 end
 

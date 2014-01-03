@@ -1,0 +1,8 @@
+%h1 Editing booking_email
+
+= form_for :booking_email do |f|
+  .field
+    = f.label :body
+    = f.text_area :body, value: @body
+  .actions
+    = f.submit 'Send email'
