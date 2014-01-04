@@ -30,6 +30,7 @@
             %ul.nav
               - if current_user
                 %li= link_to 'Logout', destroy_user_session_path,  method: :delete
+                %li= link_to 'Email template', edit_booking_email_template_path
 
     .container-fluid
       .row-fluid

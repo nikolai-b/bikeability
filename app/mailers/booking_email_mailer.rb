@@ -16,11 +16,11 @@ class BookingEmailMailer < ActionMailer::Base
 
   def replace_link body, url
     regex = /\<booking_link\:([^\>]*)\>/
+    body.gsub(regex, url)
 
-    match = body.match regex
-
-    link_text = match[1].strip
-
-    body.gsub(regex, "<a rel=\"booking_link\" href=\"#{url}\">#{link_text}</a>")
+    #Do something like this for HTML emails:
+    #match = body.match regex
+    #link_text = match[1].strip
+    #body.gsub(regex, "<a rel=\"booking_link\" href=\"#{url}\">#{link_text}</a>")
   end
 end

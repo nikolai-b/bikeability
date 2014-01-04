@@ -29,7 +29,7 @@ class BookingsController < ApplicationController
     @booking.school_teacher = @school_teacher
 
     if @booking.save
-      redirect_to [@school_teacher, @booking], notice: 'Booking request received. We will be in touch.' 
+      redirect_to [@school_teacher, @booking], notice: 'Booking requested. We will be in touch.' 
     else
       render action: 'new'
     end
@@ -40,6 +40,7 @@ class BookingsController < ApplicationController
   def update
     if @booking.update(booking_params)
       redirect_to [@school_teacher, @booking], notice: 'Booking was successfully updated.' 
+      #TECHDEBT send email here too
     else
       render action: 'edit' 
     end
