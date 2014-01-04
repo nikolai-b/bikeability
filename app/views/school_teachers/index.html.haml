@@ -1,0 +1,24 @@
+%h1 Listing school_teachers
+
+= link_to 'New School teacher', new_school_teacher_path
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th School
+      %th Telephone number
+      %th Email
+      %th
+      %th
+      %th
+  %tbody
+    - @school_teachers.each do |school_teacher|
+      %tr
+        %td= link_to school_teacher.name, school_teacher
+        %td= school_teacher.school
+        %td= school_teacher.telephone_number
+        %td= school_teacher.email
+        %td= link_to "Send booking email", new_school_teacher_booking_email_path(school_teacher), class: "btn secondary"
+        %td= link_to 'Edit', edit_school_teacher_path(school_teacher)
+        %td= link_to 'Destroy', school_teacher, method: :delete, data: { confirm: 'Are you sure?' }

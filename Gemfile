@@ -3,11 +3,14 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
-gem 'rspec-rails'
-gem 'capybara'
 gem 'devise'
 gem 'haml-rails'
 gem 'pg'
+
+gem "therubyracer"
+gem "less-rails"
+gem "twitter-bootstrap-rails"
+gem 'bootstrap-datepicker-rails'
 
 group :development, :test do
   gem 'zeus'
@@ -22,7 +25,10 @@ end
 
 group :test do
   gem 'fabricator'
+  gem 'capybara'
   gem 'launchy'
+  gem 'capybara-email'
+  gem 'rspec-rails'
 end
 
 group :production do

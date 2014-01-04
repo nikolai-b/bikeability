@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  school_teacher_id: 1
+  start_time: 2014-01-04 13:42:40
+  num_children: 1
+  required_bikes: 1
+  required_helmets: 1
+
+two:
+  school_teacher_id: 1
+  start_time: 2014-01-04 13:42:40
+  num_children: 1
+  required_bikes: 1
+  required_helmets: 1

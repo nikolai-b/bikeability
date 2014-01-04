@@ -1,0 +1,19 @@
+%p#notice= notice
+
+%p
+  %b School teacher:
+  = @booking.school_teacher_id
+%p
+  %b Start time:
+  = @booking.start_time
+%p
+  %b Num children:
+  = @booking.num_children
+%p
+  %b Required bikes:
+  = @booking.required_bikes
+%p
+  %b Required helmets:
+  = @booking.required_helmets
+
+= link_to 'Edit', edit_school_teacher_booking_path(@school_teacher, @booking)

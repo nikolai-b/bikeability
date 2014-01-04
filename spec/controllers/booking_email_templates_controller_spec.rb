@@ -19,6 +19,9 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe BookingEmailTemplatesController do
+  before do
+    sign_in
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # BookingEmailTemplate. As you add validations to BookingEmailTemplate, be sure to

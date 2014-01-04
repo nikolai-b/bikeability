@@ -1,0 +1,27 @@
+%h1 Listing bookings
+
+%table
+  %tr
+    %th School teacher
+    %th Start time
+    %th Num children
+    %th Required bikes
+    %th Required helmets
+    %th
+    %th
+    %th
+
+  - @bookings.each do |booking|
+    %tr
+      %td= booking.school_teacher_id
+      %td= booking.start_time
+      %td= booking.num_children
+      %td= booking.required_bikes
+      %td= booking.required_helmets
+      %td= link_to 'Show', booking
+      %td= link_to 'Edit', edit_booking_path(booking)
+      %td= link_to 'Destroy', booking, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Booking', new_booking_path

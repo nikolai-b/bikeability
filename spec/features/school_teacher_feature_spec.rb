@@ -1,7 +1,7 @@
 require 'capybara_helper'
 
 feature "Create a school teacher", type: :feature do
-  scenario "successful creation" do
+  scenario "success" do
     sign_in :admin
 
     visit "/school_teachers/new"

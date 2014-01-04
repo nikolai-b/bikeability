@@ -19,12 +19,15 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe SchoolTeachersController do
+  before do
+    sign_in
+  end
+
 
   # This should return the minimal set of attributes required to create a valid
   # SchoolTeacher. As you add validations to SchoolTeacher, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) { { "name" => "MyString" } }
-
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # SchoolTeachersController. Be sure to keep this updated too.

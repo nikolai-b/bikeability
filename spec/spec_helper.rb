@@ -12,7 +12,24 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
+module ControllerHelpers
+  def sign_in(user = double('user'))
+    if user.nil?
+      request.env['warden'].stub(:authenticate!).
+        and_throw(:warden, {:scope => :user})
+      controller.stub :current_user => nil
+    else
+      request.env['warden'].stub :authenticate! => user
+      controller.stub :current_user => user
+    end
+  end
+end
+
 RSpec.configure do |config|
+  config.include Devise::TestHelpers, :type => :controller
+  config.include ControllerHelpers, :type => :controller
+
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

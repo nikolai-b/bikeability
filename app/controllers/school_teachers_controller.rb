@@ -64,7 +64,7 @@ class SchoolTeachersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_school_teacher
-      @school_teacher = SchoolTeacher.find(params[:id])
+      @school_teacher = SchoolTeacher.find_by(uuid: params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,0 +1,46 @@
+%h2 Teacher
+= @school_teacher.name
+
+%h2 School
+= @school_teacher.school
+
+%h2 Address
+= @school_teacher.city
+= @school_teacher.address_line_1
+= @school_teacher.address_line_2
+= @school_teacher.postcode
+
+= form_for [@school_teacher, @booking] do |f|
+  - if @booking.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@booking.errors.count, "error")} prohibited this booking from being saved:"
+      %ul
+        - @booking.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    .input-append.date
+      = f.label :start_time, "Start date"
+      %input.span2(id="booking_start_time" name="booking[start_time]" type="text")
+      %span.add-on
+        %i.icon-th
+
+    :javascript
+      $('#booking_start_time').datepicker({
+          format: "dd/mm/yyyy",
+          weekStart: 1,
+          todayBtn: "linked",
+          daysOfWeekDisabled: "0,6"
+      });
+
+  .field
+    = f.label :num_children, "Number of children"
+    = f.number_field :num_children
+
+  .field
+    = f.label :required_bikes, "Required number of bikes"
+    = f.number_field :required_bikes
+  .field
+    = f.label :required_helmets, "Required number of helmets"
+    = f.number_field :required_helmets
+  .actions
+    = f.submit 'Request booking'

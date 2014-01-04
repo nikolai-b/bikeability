@@ -1,4 +1,5 @@
 Bikeability::Application.routes.draw do
+
   resource :booking_email_template
 
   devise_for :users
@@ -6,6 +7,7 @@ Bikeability::Application.routes.draw do
 
   resources :school_teachers do
     resources :booking_emails
+    resources :bookings
   end
 
   #get index

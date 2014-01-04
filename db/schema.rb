@@ -11,13 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140103121817) do
+ActiveRecord::Schema.define(version: 20140104134240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "booking_email_templates", force: true do |t|
     t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bookings", force: true do |t|
+    t.integer  "school_teacher_id"
+    t.datetime "start_time"
+    t.integer  "num_children"
+    t.integer  "required_bikes"
+    t.integer  "required_helmets"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -33,6 +43,7 @@ ActiveRecord::Schema.define(version: 20140103121817) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "uuid"
   end
 
   create_table "users", force: true do |t|

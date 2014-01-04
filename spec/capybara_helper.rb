@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
+require 'capybara/email/rspec'
 require 'fabricator'
 
 Dir[(File.expand_path "../support/", __FILE__) + "/**/*.rb"].each {|f| require f}
