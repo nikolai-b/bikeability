@@ -21,6 +21,6 @@ class BookingEmailMailer < ActionMailer::Base
 
     link_text = match[1].strip
 
-    body.gsub(regex, "<a href='#{url}'>#{link_text}</a>")
+    body.gsub(regex, "<a rel=\"booking_link\" href=\"#{url}\">#{link_text}</a>")
   end
 end

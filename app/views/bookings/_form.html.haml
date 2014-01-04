@@ -20,7 +20,7 @@
   .field
     .input-append.date
       = f.label :start_time, "Start date"
-      %input.span2(id="booking_start_time" name="booking[start_time]" type="text")
+      %input.span12(value='#{@booking.start_time.try(:strftime, "%d/%m/%Y")}' id="booking_start_time" name="booking[start_time]" type="text")
       %span.add-on
         %i.icon-th
 

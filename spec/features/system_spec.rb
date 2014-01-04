@@ -60,8 +60,7 @@ feature "Create a booking email", type: :feature do
     open_email "teacher@example.com"
 
     current_email.should have_content 'Nice email'
-    byebug
-    current_email.click_link 'Book here'
+    current_email.click_link 'booking_link'
 
     page.should have_content "John Barnaby-Gumbleton-Smythe"
     page.should have_content "Leeds Low"

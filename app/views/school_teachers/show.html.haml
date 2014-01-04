@@ -1,0 +1,45 @@
+- model_class = SchoolTeacher
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.titleize
+
+%p
+  %strong= model_class.human_attribute_name(:name) + ':'
+  %br
+  = @school_teacher.name
+%p
+  %strong= model_class.human_attribute_name(:school) + ':'
+  %br
+  = @school_teacher.school
+%p
+  %strong= model_class.human_attribute_name(:address_line_1) + ':'
+  %br
+  = @school_teacher.address_line_1
+%p
+  %strong= model_class.human_attribute_name(:address_line_2) + ':'
+  %br
+  = @school_teacher.address_line_2
+%p
+  %strong= model_class.human_attribute_name(:city) + ':'
+  %br
+  = @school_teacher.city
+%p
+  %strong= model_class.human_attribute_name(:postcode) + ':'
+  %br
+  = @school_teacher.postcode
+%p
+  %strong= model_class.human_attribute_name(:telephone_number) + ':'
+  %br
+  = @school_teacher.telephone_number
+%p
+  %strong= model_class.human_attribute_name(:email) + ':'
+  %br
+  = @school_teacher.email
+%p
+  %strong= model_class.human_attribute_name(:uuid) + ':'
+  %br
+  = @school_teacher.uuid
+
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), school_teachers_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_school_teacher_path(@school_teacher), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), school_teacher_path(@school_teacher), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

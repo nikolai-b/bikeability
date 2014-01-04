@@ -1,8 +1,11 @@
-%h1 Editing booking_email
+- model_class = BookingEmail
+.page-header
+  %h1=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
 
-= form_for :booking_email, url: school_teacher_booking_emails_path(@school_teacher) do |f|
-  .field
-    = f.label :body
-    = f.text_area :body, value: @body
-  .actions
-    = f.submit 'Send email'
+= form_for :booking_email, url: school_teacher_booking_emails_path(@school_teacher), :html => { :class => 'form' }  do |f|
+  .control-group
+    = f.label :body, :class => 'control-label'
+    .controls
+      = f.text_area :body, value: @body, class: "field span6", rows: "15"
+  .form-actions
+    = f.submit "Send email", :class => 'btn btn-primary'

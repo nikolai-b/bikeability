@@ -26,9 +26,10 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(booking_params)
+    @booking.school_teacher = @school_teacher
 
     if @booking.save
-      redirect_to [@school_teacher, @booking], notice: 'Booking was successfully created.' 
+      redirect_to [@school_teacher, @booking], notice: 'Booking request received. We will be in touch.' 
     else
       render action: 'new'
     end

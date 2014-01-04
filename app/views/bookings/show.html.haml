@@ -1,8 +1,10 @@
-%p#notice= notice
+%p
+  %b School :
+  = @booking.school_teacher.school
 
 %p
   %b School teacher:
-  = @booking.school_teacher_id
+  = @booking.school_teacher.name
 %p
   %b Start time:
   = @booking.start_time
