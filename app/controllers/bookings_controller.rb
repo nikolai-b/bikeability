@@ -1,4 +1,4 @@
-class BookingsController < ApplicationController
+class BookingsController < UnthenticatedController
   before_action :set_booking, only: [:show, :edit, :update, :destroy]
   before_action :set_school_teacher
 
