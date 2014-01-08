@@ -2,7 +2,7 @@ Bikeability::Application.routes.draw do
 
   resource :booking_email_template
 
-  devise_for :users
+  devise_for :users, :skip => :registrations
   root 'welcome#index'
 
   resources :school_teachers do
