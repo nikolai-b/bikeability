@@ -29,6 +29,9 @@ class BookingsController < UnauthenticatedController
     @booking.school_teacher = @school_teacher
 
     if @booking.save
+    email = AdminEmailMailer.admin_email(@booking,current_user,'new')
+
+    email.deliver
       redirect_to [@school_teacher, @booking], notice: 'Booking requested. We will be in touch.' 
     else
       render action: 'new'
@@ -39,8 +42,10 @@ class BookingsController < UnauthenticatedController
   # PATCH/PUT /bookings/1.json
   def update
     if @booking.update(booking_params)
+      email = AdminEmailMailer.admin_email(@booking,current_user,'updated')
+
+      email.deliver
       redirect_to [@school_teacher, @booking], notice: 'Booking was successfully updated.' 
-      #TECHDEBT send email here too
     else
       render action: 'edit' 
     end

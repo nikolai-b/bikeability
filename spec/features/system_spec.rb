@@ -12,14 +12,13 @@ feature "Create a booking email", type: :feature do
     create_new_booking
     page.should have_content "Booking requested. We will be in touch."
 
-    pending "Not implemented email to admin once a booking is created"
+#    pending "Not implemented email to admin once a booking is created"
     open_email "admin@example.com"
 
-    current_email.should have_content 'Booking requested'
+    current_email.should have_content 'Bikeability booking requested'
     current_email.should have_content 'Leeds Low'
 
-    current_email.click_link 'View booking'
-
+    current_email.find_link('a').click
     page.should have_content "Leeds Low"
     page.should have_content "17 children"
     page.should have_content "13 bikes"
