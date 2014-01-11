@@ -11,3 +11,17 @@
  *= require_tree
  *= require bootstrap-datepicker
  */
+
+.table-striped th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.table-striped th .asc {
+  background-image: image-url('images/up_arrow.png');
+}
+
+.table-striped th .desc {
+  background-image: image-url('images/down_arrow.png');
+}

@@ -12,15 +12,15 @@ feature "Order schools index", type: :feature do
     click_on "School Name"
     uri = URI.parse(current_url)
     uri.should have_content "school_name"
-    uri.should have_content "desc"
+    uri.should have_content "asc"
 
     click_on "School Name"
     uri = URI.parse(current_url)
-    uri.should have_content "asc"
+    uri.should have_content "desc"
     
     click_on "School Name"
     uri = URI.parse(current_url)
-    uri.should have_content "desc"
+    uri.should have_content "asc"
   end
 
   def get_url
