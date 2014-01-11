@@ -1,30 +1,31 @@
 require 'capybara_helper'
 
-feature "Create a school", type: :feature do
+feature "Order schools index", type: :feature do
   scenario "success" do
     sign_in :admin
 
-    visit "/schools/new"
+    school = School.create school_name: "Zulu School", teacher_name: "Andy"
+    school = School.create school_name: "Aardvark School", teacher_name: "Mike"
+    school = School.create school_name: "Middel School", teacher_name: "Zak"
+    visit "/schools"
 
-    fill_in_new_school_form
+    click_on "School Name"
+    uri = URI.parse(current_url)
+    uri.should have_content "school_name"
+    uri.should have_content "desc"
 
-    page.should have_content "School was successfully created."
+    click_on "School Name"
+    uri = URI.parse(current_url)
+    uri.should have_content "asc"
+    
+    click_on "School Name"
+    uri = URI.parse(current_url)
+    uri.should have_content "desc"
   end
 
-  def fill_in_new_school_form
-    fill_in "School name", with: "School for the elderly"
-    fill_in "Address line 1", with: "1 Worthington Crescent"
-    fill_in "Address line 2", with: "Areasville"
-    fill_in "City", with: "Leeds"
-    fill_in "Postcode", with: "LS21 3QT"
-    fill_in "Telephone number", with: "0113 245 3456"
-    fill_in "Email", with: "teacher@example.com"
-    fill_in "Teacher name", with: "Joe Bloggs"
+  def get_url
 
-    click_on "Create School"
   end
-
-
 end
 
 
