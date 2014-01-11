@@ -77,10 +77,10 @@ class SchoolsController < ApplicationController
     end
 
     def sort_column
-#      if !%w[asc,desc].include?(params[:direction]) || !School.column_names.include?(params[:sort])
-#        params[:direction] = "asc"
-#        params[:sort] = "school_name"
-#      end
+      if !%w[asc desc].include?(params[:direction]) || !School.column_names.include?(params[:sort])
+        params[:direction] = "asc"
+        params[:sort] = "school_name"
+      end
       @schools = School.order(params[:sort] +" " +params[:direction])
     end
 end
