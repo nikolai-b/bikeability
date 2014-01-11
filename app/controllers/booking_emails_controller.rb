@@ -21,7 +21,7 @@ class BookingEmailsController < ApplicationController
   private
 
   def school
-    @school ||= School.find_by(uuid: params[:school_id])
+    @school ||= School.find(params[:school_id])
   end
 
   def booking_email_params

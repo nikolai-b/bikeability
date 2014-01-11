@@ -1,6 +1,6 @@
 class SchoolsController < ApplicationController
   before_action :set_school, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticate_user!, only: [:index, :new, :create, :destroy]
   # GET /schools
   # GET /schools.json
   def index
@@ -68,7 +68,7 @@ class SchoolsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_school
-      @school = School.find_by(uuid: params[:id])
+      @school = School.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

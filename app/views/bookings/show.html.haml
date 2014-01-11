@@ -1,3 +1,4 @@
+- @school = School.find_by(id: @booking.school_id)
 %p
   %b School :
   = @booking.school.school_name
@@ -18,4 +19,4 @@
   %b Required helmets:
   = @booking.required_helmets
 
-= link_to 'Edit', edit_school_booking_path(@school, @booking)
+= link_to 'Edit', edit_booking_path(@booking)

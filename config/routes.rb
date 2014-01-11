@@ -4,17 +4,17 @@ Bikeability::Application.routes.draw do
 
   devise_for :users, :skip => :registrations
     as :user do
-      get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'    
-      put 'users/:id' => 'devise/registrations#update', :as => 'user_registration'            
+      get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+      put 'users/:id' => 'devise/registrations#update', :as => 'user_registration'
     end
 
   root 'welcome#index'
 
-  resources :schools do
+  resources :schools, :shallow => true do
     resources :booking_emails
     resources :bookings
   end
-
+  get '/schools/:school_id/booking/new', {:controller=>"booking", :action=>"new"} 
   #get index
   #get id show
 

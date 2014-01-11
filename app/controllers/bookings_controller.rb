@@ -1,6 +1,6 @@
 class BookingsController < UnauthenticatedController
-  before_action :set_booking, only: [:show, :edit, :update, :destroy]
-  before_action :set_school
+  before_action :set_booking_and_school, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!, only: [:index, :new, :create, :destroy]
 
   # GET /bookings
   # GET /bookings.json
@@ -29,10 +29,10 @@ class BookingsController < UnauthenticatedController
     @booking.school = @school
 
     if @booking.save
-    email = AdminEmailMailer.admin_email(@booking,current_user,'new')
+      email = AdminEmailMailer.school_email(@booking, current_user, 'new')
 
-    email.deliver
-      redirect_to [@school, @booking], notice: 'Booking requested. We will be in touch.' 
+      email.deliver
+      redirect_to [@school, @booking], notice: 'Booking created. Email sent to teacher.' 
     else
       render action: 'new'
     end
@@ -45,7 +45,7 @@ class BookingsController < UnauthenticatedController
       email = AdminEmailMailer.admin_email(@booking,current_user,'updated')
 
       email.deliver
-      redirect_to [@school, @booking], notice: 'Booking was successfully updated.' 
+      redirect_to @booking, notice: 'Booking updated.' 
     else
       render action: 'edit' 
     end
@@ -63,12 +63,9 @@ class BookingsController < UnauthenticatedController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_booking
-      @booking = Booking.find(params[:id])
-    end
-
-    def set_school
-      @school = School.find_by(uuid: params[:school_id])
+    def set_booking_and_school
+      @booking = Booking.find_by(uuid: params[:id])
+      @school = School.find(@booking.school_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

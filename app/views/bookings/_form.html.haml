@@ -1,3 +1,4 @@
+- @school = School.find(params[:school_id])
 %h2 School
 = @school.school_name
 
@@ -10,7 +11,7 @@
 = @school.address_line_2
 = @school.postcode
 
-= form_for [@school, @booking] do |f|
+= form_for @booking, :html => { :class => 'form-horizontal' } do |f|
   - if @booking.errors.any?
     #error_explanation
       %h2= "#{pluralize(@booking.errors.count, "error")} prohibited this booking from being saved:"
@@ -43,4 +44,4 @@
     = f.label :required_helmets, "Required number of helmets"
     = f.number_field :required_helmets
   .actions
-    = f.submit 'Request booking'
+    = f.submit 'Create booking'

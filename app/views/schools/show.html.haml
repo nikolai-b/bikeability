@@ -34,10 +34,6 @@
   %strong= model_class.human_attribute_name(:email) + ':'
   %br
   = @school.email
-%p
-  %strong= model_class.human_attribute_name(:uuid) + ':'
-  %br
-  = @school.uuid
 
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), schools_path, :class => 'btn'
