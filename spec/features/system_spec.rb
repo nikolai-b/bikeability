@@ -39,9 +39,9 @@ feature "Create a booking email", type: :feature do
   end
 
   def send_new_email email
-    school_teacher = SchoolTeacher.create name: "John Barnaby-Gumbleton-Smythe", email: email, school: "Leeds Low"
+    school = School.create school_name: "Leeds Low", email: email, teacher_name: "John Barnaby-Gumbleton-Smythe"
 
-    visit new_school_teacher_booking_email_path school_teacher
+    visit new_school_booking_email_path school
 
     page.should have_content <<-EMAIL.gsub(/^\s/, "")
       Dear John Barnaby-Gumbleton-Smythe,

@@ -1,12 +1,8 @@
-= form_for @school_teacher, :html => { :class => 'form-horizontal' } do |f|
+= form_for @school, :html => { :class => 'form-horizontal' } do |f|
   .control-group
-    = f.label :name, :class => 'control-label'
+    = f.label :school_name, :class => 'control-label'
     .controls
-      = f.text_field :name, :class => 'text_field'
-  .control-group
-    = f.label :school, :class => 'control-label'
-    .controls
-      = f.text_field :school, :class => 'text_field'
+      = f.text_field :school_name, :class => 'text_field'
   .control-group
     = f.label :address_line_1, :class => 'control-label'
     .controls
@@ -28,13 +24,13 @@
     .controls
       = f.text_field :telephone_number, :class => 'text_field'
   .control-group
+    = f.label :teacher_name, :class => 'control-label'
+    .controls
+      = f.text_field :teacher_name, :class => 'text_field'
+  .control-group
     = f.label :email, :class => 'control-label'
     .controls
       = f.text_field :email, :class => 'text_field'
-  .control-group
-    = f.label :uuid, :class => 'control-label'
-    .controls
-      = f.text_field :uuid, :class => 'text_field'
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), school_teachers_path, :class => 'btn'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), schools_path, :class => 'btn'

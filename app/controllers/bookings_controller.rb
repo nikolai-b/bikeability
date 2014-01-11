@@ -1,6 +1,6 @@
 class BookingsController < UnauthenticatedController
   before_action :set_booking, only: [:show, :edit, :update, :destroy]
-  before_action :set_school_teacher
+  before_action :set_school
 
   # GET /bookings
   # GET /bookings.json
@@ -26,13 +26,13 @@ class BookingsController < UnauthenticatedController
   # POST /bookings.json
   def create
     @booking = Booking.new(booking_params)
-    @booking.school_teacher = @school_teacher
+    @booking.school = @school
 
     if @booking.save
     email = AdminEmailMailer.admin_email(@booking,current_user,'new')
 
     email.deliver
-      redirect_to [@school_teacher, @booking], notice: 'Booking requested. We will be in touch.' 
+      redirect_to [@school, @booking], notice: 'Booking requested. We will be in touch.' 
     else
       render action: 'new'
     end
@@ -45,7 +45,7 @@ class BookingsController < UnauthenticatedController
       email = AdminEmailMailer.admin_email(@booking,current_user,'updated')
 
       email.deliver
-      redirect_to [@school_teacher, @booking], notice: 'Booking was successfully updated.' 
+      redirect_to [@school, @booking], notice: 'Booking was successfully updated.' 
     else
       render action: 'edit' 
     end
@@ -67,12 +67,11 @@ class BookingsController < UnauthenticatedController
       @booking = Booking.find(params[:id])
     end
 
-    def set_school_teacher
-      @school_teacher = SchoolTeacher.find_by(uuid: params[:school_teacher_id])
+    def set_school
+      @school = School.find_by(uuid: params[:school_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
-      params.require(:booking).permit(:school_teacher_id, :start_time, :num_children, :required_bikes, :required_helmets)
-    end
+      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets) end
 end

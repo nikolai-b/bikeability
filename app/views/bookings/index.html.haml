@@ -4,7 +4,7 @@
 %table.table.table-striped
   %thead
     %tr
-      %th School teacher
+      %th School 
       %th Start time
       %th Num children
       %th Required bikes
@@ -15,14 +15,14 @@
   %tbody
   - @bookings.each do |booking|
     %tr
-      %td= booking.school_teacher_id
+      %td= booking.school_id
       %td= booking.start_time
       %td= booking.num_children
       %td= booking.required_bikes
       %td= booking.required_helmets 
-      %td= link_to 'Show', [@school_teacher,@booking]
-      %td= link_to 'Edit', [:edit,@school_teacher,@booking]
-      %td= link_to 'Destroy', [@school_teacher,@booking], :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= link_to 'Show', [@school,@booking]
+      %td= link_to 'Edit', [:edit,@school,@booking]
+      %td= link_to 'Destroy', [@school,@booking], :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 

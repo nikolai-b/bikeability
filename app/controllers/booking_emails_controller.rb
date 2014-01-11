@@ -1,6 +1,6 @@
 class BookingEmailsController < ApplicationController
   def new
-    @body = BookingEmailTemplate.email_body_for(school_teacher)
+    @body = BookingEmailTemplate.email_body_for(school)
   end
 
   def show
@@ -9,7 +9,7 @@ class BookingEmailsController < ApplicationController
 
   def create
     body = booking_email_params[:body]
-    email = BookingEmailMailer.booking_email(school_teacher, current_user, body)
+    email = BookingEmailMailer.booking_email(school, current_user, body)
 
     email.deliver
 
@@ -20,8 +20,8 @@ class BookingEmailsController < ApplicationController
 
   private
 
-  def school_teacher
-    @school_teacher ||= SchoolTeacher.find_by(uuid: params[:school_teacher_id])
+  def school
+    @school ||= School.find_by(uuid: params[:school_id])
   end
 
   def booking_email_params

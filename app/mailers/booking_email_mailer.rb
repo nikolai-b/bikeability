@@ -1,11 +1,11 @@
 class BookingEmailMailer < ActionMailer::Base
   default from: 'admin@bikeability.herokuapp.com'
 
-  def booking_email(school_teacher, admin, body)
-    url = new_school_teacher_booking_url school_teacher
+  def booking_email(school, admin, body)
+    url = new_school_booking_url school
     body = replace_link body, url
 
-    mail(to: school_teacher.email,
+    mail(to: school.email,
          reply_to: admin.email,
          bcc: admin.email,
          subject: 'Bikeability booking',

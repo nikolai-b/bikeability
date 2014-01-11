@@ -1,16 +1,16 @@
-%h2 Teacher
-= @school_teacher.name
-
 %h2 School
-= @school_teacher.school
+= @school.school_name
+
+%h2 Teacher name
+= @school.teacher_name
 
 %h2 Address
-= @school_teacher.city
-= @school_teacher.address_line_1
-= @school_teacher.address_line_2
-= @school_teacher.postcode
+= @school.city
+= @school.address_line_1
+= @school.address_line_2
+= @school.postcode
 
-= form_for [@school_teacher, @booking] do |f|
+= form_for [@school, @booking] do |f|
   - if @booking.errors.any?
     #error_explanation
       %h2= "#{pluralize(@booking.errors.count, "error")} prohibited this booking from being saved:"

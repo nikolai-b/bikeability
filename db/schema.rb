@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20140104191235) do
   end
 
   create_table "bookings", force: true do |t|
-    t.integer  "school_teacher_id"
+    t.integer  "school_id"
     t.datetime "start_time"
     t.integer  "num_children"
     t.integer  "required_bikes"
@@ -36,14 +36,14 @@ ActiveRecord::Schema.define(version: 20140104191235) do
     t.datetime "updated_at"
   end
 
-  create_table "school_teachers", force: true do |t|
-    t.string   "name"
-    t.string   "school"
+  create_table "schools", force: true do |t|
+    t.string   "school_name"
     t.string   "address_line_1"
     t.string   "address_line_2"
     t.string   "city"
     t.string   "postcode"
     t.string   "telephone_number"
+    t.string   "teacher_name"
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"

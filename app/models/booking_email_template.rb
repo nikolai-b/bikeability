@@ -9,8 +9,8 @@ class BookingEmailTemplate < ActiveRecord::Base
     singular_template.body
   end
 
-  def self.email_body_for school_teacher
-    default_body.gsub("<name>", school_teacher.name)
+  def self.email_body_for school
+    default_body.gsub("<name>", school.teacher_name)
   end
 
   def singular_template

@@ -1,4 +1,4 @@
-class SchoolTeacher < ActiveRecord::Base
+class School < ActiveRecord::Base
   has_many :bookings
   after_create :uuid
 

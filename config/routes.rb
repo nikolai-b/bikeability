@@ -3,9 +3,14 @@ Bikeability::Application.routes.draw do
   resource :booking_email_template
 
   devise_for :users, :skip => :registrations
+    as :user do
+      get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'    
+      put 'users/:id' => 'devise/registrations#update', :as => 'user_registration'            
+    end
+
   root 'welcome#index'
 
-  resources :school_teachers do
+  resources :schools do
     resources :booking_emails
     resources :bookings
   end
