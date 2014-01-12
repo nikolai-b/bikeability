@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140111210752) do
+ActiveRecord::Schema.define(version: 20140112180654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assets", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.integer  "booking_id"
+  end
 
   create_table "booking_email_templates", force: true do |t|
     t.text     "body"
@@ -35,6 +47,10 @@ ActiveRecord::Schema.define(version: 20140111210752) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "uuid"
+    t.string   "booking_document_file_name"
+    t.string   "booking_document_content_type"
+    t.integer  "booking_document_file_size"
+    t.datetime "booking_document_updated_at"
   end
 
   create_table "schools", force: true do |t|

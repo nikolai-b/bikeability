@@ -19,7 +19,7 @@
 = @school.postcode
 
 - form_path = params[:school_id] ? [@school,@booking] : @booking
-= form_for form_path do |f|
+= form_for form_path, :html => { :multipart => true } do |f|
   - if @booking.errors.any?
     #error_explanation
       %h2= "#{pluralize(@booking.errors.count, "error")} prohibited this booking from being saved:"
@@ -51,5 +51,8 @@
   .field
     = f.label :required_helmets, "Required number of helmets"
     = f.number_field :required_helmets
+  .field
+    = f.label :booking_document, "Booking document"
+    = f.file_field :booking_document
   .actions
     = f.submit create_or_edit

@@ -72,6 +72,6 @@ class BookingsController < UnauthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
-      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets)
+      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, :booking_document)
     end
 end

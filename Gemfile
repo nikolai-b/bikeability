@@ -11,6 +11,7 @@ gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem 'bootstrap-datepicker-rails'
+gem "paperclip", "~> 3.0"
 
 group :development, :test do
   gem 'zeus'
