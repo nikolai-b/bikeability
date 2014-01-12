@@ -52,7 +52,7 @@
     = f.label :required_helmets, "Required number of helmets"
     = f.number_field :required_helmets
   .field
-    = f.label :booking_document, "Booking document"
-    = f.file_field :booking_document
+    = f.label :booking_document, "Booking documents"
+    = f.file_field :booking_document_array, :multiple =>:true
   .actions
     = f.submit create_or_edit

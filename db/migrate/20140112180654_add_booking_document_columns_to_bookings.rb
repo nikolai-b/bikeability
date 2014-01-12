@@ -1,4 +1,4 @@
-class AddBookingDocumentToBookings < ActiveRecord::Migration
+class AddBookingDocumentColumnsToBookings < ActiveRecord::Migration
   def self.up
     add_attachment :bookings, :booking_document
   end

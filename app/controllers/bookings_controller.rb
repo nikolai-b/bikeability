@@ -25,10 +25,13 @@ class BookingsController < UnauthenticatedController
   # POST /bookings
   # POST /bookings.json
   def create
-    @booking = Booking.new(booking_params)
-    
-    # CODESMELL
-    @booking.school_id = params[:school_id] 
+    params[:booking][:booking_document_array].each do |file|
+      @booking = Booking.new(booking_params)
+      # CODESMELL
+      @booking.school_id = params[:school_id]
+      @booking.booking_document = file
+      @booking.save
+    end
     
     if @booking.save
       email = AdminEmailMailer.school_email(@booking, current_user, 'new')
@@ -72,6 +75,6 @@ class BookingsController < UnauthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
-      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, :booking_document)
+      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, :booking_document_array)
     end
 end
