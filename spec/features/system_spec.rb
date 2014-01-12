@@ -12,13 +12,12 @@ feature "Create a booking email", type: :feature do
     create_new_booking
     page.should have_content "Booking created. Email sent to teacher."
 
-    open_email "teacher@example.com"
+    open_email "teacher.book@example.com"
 
-    current_email.should have_content 'Your Bikeability booking has been confirmed!'
-    current_email.should have_content 'Leeds Low'
+    current_email.should have_content 'Your Bikeability booking starting on Tuesday the 13th of January, 2015 for 17'
 
     current_email.find_link('a').click
-    page.should have_content "Leeds Low"
+    page.should have_content "Booking School"
     find_field('Number of children').value.should eq '17'
     find_field('Required number of bikes').value.should eq '13'
   end
@@ -58,7 +57,7 @@ feature "Create a booking email", type: :feature do
 
   def create_new_booking
 #    open_email "teacher@example.com"
-    school = School.create school_name: "Booking School", email: "teacher2@example.com", teacher_name: "Mr Booking"
+    school = School.create school_name: "Booking School", email: "teacher.book@example.com", teacher_name: "Mr Booking"
     visit "/schools"
     click_on "Create booking"
 #    current_email.should have_content 'Nice email'
