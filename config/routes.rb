@@ -14,7 +14,9 @@ Bikeability::Application.routes.draw do
     resources :booking_emails
     resources :bookings
   end
-  get '/schools/:school_id/booking/new', {:controller=>"booking", :action=>"new"} 
+  
+  get '/bookings', to: 'bookings#index'
+
   #get index
   #get id show
 

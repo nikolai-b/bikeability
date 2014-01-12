@@ -14,14 +14,13 @@ feature "Create a booking email", type: :feature do
 
     open_email "teacher@example.com"
 
-    current_email.should have_content 'Bikeability booking requested'
+    current_email.should have_content 'Your Bikeability booking has been confirmed!'
     current_email.should have_content 'Leeds Low'
 
-    pending "Not implemented booking link correctly"
     current_email.find_link('a').click
     page.should have_content "Leeds Low"
-    page.should have_content "17 children"
-    page.should have_content "13 bikes"
+    find_field('Number of children').value.should eq '17'
+    find_field('Required number of bikes').value.should eq '13'
   end
 
   def create_email_template
