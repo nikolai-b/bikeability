@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @instructor.name
+%p
+  %b Email:
+  = @instructor.email
+%p
+  %b Telephone number:
+  = @instructor.telephone_number
+%p
+  %b Post code:
+  = @instructor.post_code
+
+= link_to 'Edit', edit_instructor_path(@instructor)
+\|
+= link_to 'Back', instructors_path

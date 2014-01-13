@@ -2,7 +2,9 @@ class Booking < ActiveRecord::Base
   belongs_to :school
   validates_numericality_of :num_children, :only_integer => true, :greater_than_or_equal_to => 4
   after_create :uuid
-  has_many :booking_asset
+  has_many :booking_assets
+  has_many :booking_instructors
+  has_many :instructors, through: :booking_instructors
 
   def to_param
     uuid

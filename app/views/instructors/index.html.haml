@@ -1,0 +1,25 @@
+%h1 Listing instructors
+
+%table
+  %tr
+    %th Name
+    %th Email
+    %th Telephone number
+    %th Post code
+    %th
+    %th
+    %th
+
+  - @instructors.each do |instructor|
+    %tr
+      %td= instructor.name
+      %td= instructor.email
+      %td= instructor.telephone_number
+      %td= instructor.post_code
+      %td= link_to 'Show', instructor
+      %td= link_to 'Edit', edit_instructor_path(instructor)
+      %td= link_to 'Destroy', instructor, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Instructor', new_instructor_path

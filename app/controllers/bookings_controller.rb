@@ -33,7 +33,7 @@ class BookingsController < UnauthenticatedController
       files = params[:booking][:booking_asset_array]
       if files
         files.each do |file|
-          @booking.booking_asset.create(booking_file: file)
+          @booking.booking_assets.create(booking_file: file)
         end
       end
       email = AdminEmailMailer.school_email(@booking, current_user, 'new')
@@ -77,6 +77,6 @@ class BookingsController < UnauthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
-      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, :booking_asset_array)
+      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, :booking_asset_array, :instructor1_id, :instructor2_id)
     end
 end

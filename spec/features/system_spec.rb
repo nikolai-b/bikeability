@@ -8,6 +8,9 @@ feature "Create a booking email", type: :feature do
     page.should have_content "Booking email template was successfully updated."
 
    # send_new_email "teacher@example.com"
+    create_new_instructor "Chris Martin" , "chris.martin@example.com"
+    create_new_instructor "Brett", "brett@example.com"
+
 
     create_new_booking
     page.should have_content "Booking created. Email sent to teacher."
@@ -55,6 +58,17 @@ feature "Create a booking email", type: :feature do
     click_on "Send email"
   end
 
+  def create_new_instructor name, email
+    visit "/instructors"
+    click_on "New Instructor"
+    
+    fill_in "Name", with: name
+    fill_in "Email", with: email
+    fill_in "Telephone number", with: "0779"
+
+    click_on "Save"
+  end
+
   def create_new_booking
 #    open_email "teacher@example.com"
     school = School.create school_name: "Booking School", email: "teacher.book@example.com", teacher_name: "Mr Booking"
@@ -70,6 +84,8 @@ feature "Create a booking email", type: :feature do
     fill_in "Number of children", with: 17
     fill_in "Required number of bikes", with: 13
     fill_in "Required number of helmets", with: 17
+    select("Chris Martin", :from => "Instructor1")
+    select("Brett", :from => "Instructor2")
 
     click_on "Create booking"
   end
