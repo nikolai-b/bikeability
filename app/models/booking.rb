@@ -2,8 +2,7 @@ class Booking < ActiveRecord::Base
   belongs_to :school
   validates_numericality_of :num_children, :only_integer => true, :greater_than_or_equal_to => 4
   after_create :uuid
-  has_attached_file :booking_document
-
+  has_many :booking_asset
 
   def to_param
     uuid
@@ -19,4 +18,5 @@ class Booking < ActiveRecord::Base
 
     uuid
   end
+
 end

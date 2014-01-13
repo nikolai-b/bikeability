@@ -12,16 +12,16 @@ class AdminEmailMailer < ActionMailer::Base
 
   def school_email(booking, admin, new_or_updated)
     url = edit_booking_url(booking)
-    url2 = booking.booking_document.url
-    booking_minus_one = Booking.find_by(:id => booking.id-1)
-    booking_minus_two = Booking.find_by(:id => booking.id-2)
-    url3 = booking_minus_one.booking_document.url
-    url4 = booking_minus_two.booking_document.url
+    booking_assets = BookingAsset.where(:booking_id => booking.id)
+    asset_urls = Array.new
+    booking_assets.each do |asset|
+      asset_urls.push(asset.booking_file.url)
+    end
     school = School.find(booking.school_id)
     formatted_booking_date = booking.start_time.strftime("%A the #{booking.start_time.day.ordinalize} of %B, %Y")
     mail(to: school.email,
          subject: "Your Bikeability booking has been confirmed!",
-         body: "#{url2} - #{url3} - #{url4} - Your Bikeability booking starting on #{formatted_booking_date} for #{booking.num_children} children has been confirmed!  
+         body: "#{asset_urls} - Your Bikeability booking starting on #{formatted_booking_date} for #{booking.num_children} children has been confirmed!  
          When you know the number of bikes please fill it in #{url}")
   end
 
