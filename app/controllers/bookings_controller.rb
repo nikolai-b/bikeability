@@ -5,7 +5,11 @@ class BookingsController < UnauthenticatedController
   # GET /bookings
   # GET /bookings.json
   def index
-    @bookings = Booking.all
+    if params[:sort]
+      sort_column
+    else
+      @bookings = Booking.all
+    end
   end
 
   # GET /bookings/1
@@ -75,8 +79,17 @@ class BookingsController < UnauthenticatedController
       @school = School.find(@booking.school_id)
     end
 
+    def sort_column
+      #TECHDEBT include school_name
+      if !%w[asc desc].include?(params[:direction]) || !%w[start_time].include?(params[:sort])
+        params[:direction] = "asc"
+        params[:sort] = "start_time"
+      end
+      @bookings = Booking.order(params[:sort] +" " +params[:direction])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
-      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, :booking_asset_array, :instructor1_id, :instructor2_id)
+      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, :booking_asset_array, :instructor1_id, :instructor2_id, :direction, :sort)
     end
 end

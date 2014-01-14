@@ -1,27 +1,24 @@
 - model_class = Booking
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+  %h1=t '.title', :default => "Booking"
 %table.table.table-striped
   %thead
     %tr
-      %th School 
-      %th Start time
-      %th Num children
+      %th= sortable "school_name" #model_class.human_attribute_name(:school_name)
+      %th= sortable "start_time" #model_class.human_attribute_name(:teacher_name)
+      %th Number of children
       %th Required bikes
       %th Required helmets
-      %th
-      %th
-      %th
+      %th=t '.actions', :default => t("helpers.actions")
   %tbody
-  - @bookings.each do |booking|
-    %tr
-      %td= booking.school_id
-      %td= booking.start_time
-      %td= booking.num_children
-      %td= booking.required_bikes
-      %td= booking.required_helmets 
-      %td= link_to 'Show', booking
-      %td= link_to 'Edit', edit_booking_path(booking) 
-      %td= link_to 'Destroy', booking, :method => :delete, :data => { :confirm => 'Are you sure?' }
+    - @bookings.each do |booking|
+      %tr
+        %td= link_to booking.school.school_name, booking_path(booking)
+        %td= booking.start_time.to_date
+        %td= booking.num_children
+        %td= booking.required_bikes
+        %td= booking.required_helmets
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_booking_path(booking), :class => 'btn btn-mini'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), booking_path(booking), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
 
-%br

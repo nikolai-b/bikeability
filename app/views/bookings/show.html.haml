@@ -18,5 +18,10 @@
 %p
   %b Required helmets:
   = @booking.required_helmets
-
+%p
+  %b Instructor1
+  = Instructor.find(@booking.instructor1_id).name
+%p
+  %b Instructor2
+  = Instructor.find(@booking.instructor2_id).name
 = link_to 'Edit', edit_booking_path(@booking)

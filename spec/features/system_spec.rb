@@ -23,7 +23,14 @@ feature "Create a booking email", type: :feature do
     page.should have_content "Booking School"
     find_field('Number of children').value.should eq '17'
     find_field('Required number of bikes').value.should eq '13'
+
+    visit "/bookings"
+    click_on "Booking School"
+    page.should have_content "Chris Martin"
+    page.should have_content "Brett"
   end
+
+
 
   def create_email_template
     visit "/booking_email_template/edit"
