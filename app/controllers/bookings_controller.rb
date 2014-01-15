@@ -101,13 +101,12 @@ class BookingsController < UnauthenticatedController
     end
 
     def sort_column
+      direction = !%w[asc desc].include?(params[:direction]) ? "asc" : params[:direction]
+      sort = !%w[start_time].include?(params[:sort]) ? "start_time" : params[:sort]
       #TECHDEBT include school_name
-      if !%w[asc desc].include?(params[:direction]) || !%w[start_time].include?(params[:sort])
-        params[:direction] = "asc"
-        params[:sort] = "start_time"
-      end
-      @bookings = Booking.order(params[:sort] +" " +params[:direction])
+      @bookings = Booking.order(sort +" " +direction)
     end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
