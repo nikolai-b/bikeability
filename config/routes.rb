@@ -19,6 +19,7 @@ Bikeability::Application.routes.draw do
   
   get '/bookings', to: 'bookings#index'
 
+  get 'bookings/:id/instructors/:instructor_id', to: "bookings#instructor_confirm"
   #get index
   #get id show
 

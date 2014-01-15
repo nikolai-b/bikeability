@@ -25,4 +25,16 @@ class AdminEmailMailer < ActionMailer::Base
          When you know the number of bikes please fill it in #{url}")
   end
 
+  def instructor_email(booking, admin, instructor_id)
+    instructor = Instructor.find(instructor_id)
+    school = School.find(booking.school_id)
+    confirm_url = booking_url(booking) + '/instructors/' + instructor_id.to_s
+    mail(to: instructor.email,
+         subject: "Bikeability at #{school.school_name}",
+         body:"Hi #{instructor.name}, Would you be available for Bikeability training at the following school please?
+         Dates: #{booking.start_time},
+         School: #{school.school_name}, #{school.postcode}
+         Please confirm you avaliability #{confirm_url}") 
+  end
+
 end

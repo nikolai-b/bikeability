@@ -29,8 +29,13 @@
           .container.nav-collapse
             %ul.nav
               - if current_user
-                %li= link_to 'Logout', destroy_user_session_path,  method: :delete
+                %li= link_to 'Logout', destroy_user_session_path, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                %li= link_to "Edit password / email", edit_user_registration_path
                 %li= link_to 'Email template', edit_booking_email_template_path
+                %li= link_to "Schools", schools_path
+                %li= link_to "Bookings", bookings_path
+                %li= link_to "Instructors", instructors_path
+
 
     .container-fluid
       .row-fluid

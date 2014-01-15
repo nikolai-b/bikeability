@@ -30,6 +30,10 @@ module UserSigninSteps
 
     user
   end
+
+  def sign_out
+    click_on "Logout"
+  end
 end
 
 

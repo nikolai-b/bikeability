@@ -51,14 +51,15 @@
   .field
     = f.label :required_helmets, "Required number of helmets"
     = f.number_field :required_helmets
-  .field
-    = f.label :instructor1_id, "Instructor1"
-    = f.select :instructor1_id, Instructor.all.collect {|p| [ p.name, p.id ] }, {include_blank: 'None'}
-  .field
-    = f.label :instructor2_id, "Instructor2"
-    = f.select :instructor2_id, Instructor.all.collect {|p| [ p.name, p.id ] }, {include_blank: 'None'}
-  .field
-    = f.label :booking_asset_array, "Booking documents"
-    = f.file_field :booking_asset_array, :multiple =>:true
+  - if user_signed_in?
+    .field
+      = f.label :instructor1_id, "Instructor1"
+      = f.select :instructor1_id, Instructor.all.collect {|p| [ p.name, p.id ] }, {include_blank: 'None'}
+    .field
+      = f.label :instructor2_id, "Instructor2"
+      = f.select :instructor2_id, Instructor.all.collect {|p| [ p.name, p.id ] }, {include_blank: 'None'}
+    .field
+      = f.label :booking_asset_array, "Booking documents"
+      = f.file_field :booking_asset_array, :multiple =>:true
   .actions
     = f.submit create_or_edit

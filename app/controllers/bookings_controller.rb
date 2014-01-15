@@ -1,5 +1,5 @@
 class BookingsController < UnauthenticatedController
-  before_action :set_booking_and_school, only: [:show, :edit, :update, :destroy]
+  before_action :set_booking_and_school, only: [:show, :edit, :update, :destroy, :instructor_confirm]
   before_filter :authenticate_user!, only: [:index, :new, :create, :destroy]
 
   # GET /bookings
@@ -43,7 +43,13 @@ class BookingsController < UnauthenticatedController
       email = AdminEmailMailer.school_email(@booking, current_user, 'new')
 
       email.deliver
-      redirect_to [@school, @booking], notice: 'Booking created. Email sent to teacher.' 
+      email_instructor1 = AdminEmailMailer.instructor_email(@booking, current_user, @booking.instructor1_id)
+      email_instructor2 = AdminEmailMailer.instructor_email(@booking, current_user, @booking.instructor2_id)
+      email_instructor1.deliver
+      email_instructor2.deliver
+      instructor1 = Instructor.find(@booking.instructor1_id)
+      instructor2 = Instructor.find(@booking.instructor2_id)
+      redirect_to [@school, @booking], notice: "Booking created. Email sent to teacher. Emails sent to #{instructor1.name} and #{instructor2.name}."
     else
       render action: 'new'
     end
@@ -53,6 +59,7 @@ class BookingsController < UnauthenticatedController
   # PATCH/PUT /bookings/1.json
   def update
     if @booking.update(booking_params)
+      byebug
       email = AdminEmailMailer.admin_email(@booking,current_user,'updated')
 
       email.deliver
@@ -70,6 +77,20 @@ class BookingsController < UnauthenticatedController
       format.html { redirect_to '/bookings' }
       format.json { head :no_content }
     end
+  end
+
+  def instructor_confirm
+    @other_instructor
+    @instructor_available
+
+    if :instructor_id == @booking.instructor1_id
+      @other_instructor = Instructor.find(@booking.instructor2_id)
+      @instructor_available = :instructor1_available
+    else
+      @other_instructor = Instructor.find(@booking.instructor1_id)
+      @instructor_available = :instructor2_available
+    end
+
   end
 
   private
@@ -90,6 +111,8 @@ class BookingsController < UnauthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
-      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, :booking_asset_array, :instructor1_id, :instructor2_id, :direction, :sort)
+      params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, 
+                                      :booking_asset_array, :instructor1_id, :instructor2_id, :direction, :sort,
+                                      :instructor1_available, :instructor2_available)
     end
 end

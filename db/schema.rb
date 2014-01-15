@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140113152509) do
+ActiveRecord::Schema.define(version: 20140115144429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20140113152509) do
     t.string   "uuid"
     t.integer  "instructor1_id"
     t.integer  "instructor2_id"
+    t.boolean  "instructor1_available"
+    t.boolean  "instructor2_available"
   end
 
   create_table "instructors", force: true do |t|
