@@ -58,8 +58,9 @@
     .field
       = f.label :instructor2_id, "Instructor2"
       = f.select :instructor2_id, Instructor.all.collect {|p| [ p.name, p.id ] }, {include_blank: 'None'}
-    .field
-      = f.label :booking_asset_array, "Booking documents"
-      = f.file_field :booking_asset_array, :multiple =>:true
+    - if params[:school_id]
+      .field
+        = f.label :booking_asset_array, "Booking documents"
+        = f.file_field :booking_asset_array, :multiple =>:true
   .actions
     = f.submit create_or_edit
