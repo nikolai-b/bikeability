@@ -19,7 +19,8 @@ Bikeability::Application.routes.draw do
   
   get '/bookings', to: 'bookings#index'
 
-  get 'bookings/:id/instructors/:instructor_id', to: "bookings#instructor_confirm"
+  #TECHDEBT switch to instructor controller
+  get 'bookings/:id/instructors/:instructor_id/edit', to: "booking_instructors#edit"
   #get index
   #get id show
 

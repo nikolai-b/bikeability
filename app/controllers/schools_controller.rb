@@ -66,21 +66,19 @@ class SchoolsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_school
-      @school = School.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_school
+    @school = School.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def school_params
-      params.require(:school).permit(:school_name, :address_line_1, :address_line_2, :city, :postcode, :telephone_number, :teacher_name, :email)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def school_params
+    params.require(:school).permit(:school_name, :address_line_1, :address_line_2, :city, :postcode, :telephone_number, :teacher_name, :email)
+  end
 
-    def sort_column
-      if !%w[asc desc].include?(params[:direction]) || !School.column_names.include?(params[:sort])
-        params[:direction] = "asc"
-        params[:sort] = "school_name"
-      end
-      @schools = School.order(params[:sort] +" " +params[:direction])
-    end
+  def sort_column
+    direction = !%w[asc desc].include?(params[:direction]) ? "asc" : params[:direction]
+    sort = !School.column_names.include?(params[:sort]) ? "school_name" : params[:sort]
+    @schools = School.order(params[:sort] +" " +params[:direction])
+  end
 end

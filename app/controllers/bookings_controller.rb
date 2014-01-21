@@ -20,6 +20,7 @@ class BookingsController < UnauthenticatedController
   # GET /bookings/new
   def new
     @booking = Booking.new
+    #TECHDEBT build instructors
   end
 
   # GET /bookings/1/edit
@@ -59,7 +60,6 @@ class BookingsController < UnauthenticatedController
   # PATCH/PUT /bookings/1.json
   def update
     if @booking.update(booking_params)
-      byebug
       email = AdminEmailMailer.admin_email(@booking,current_user,'updated')
 
       email.deliver
@@ -79,6 +79,8 @@ class BookingsController < UnauthenticatedController
     end
   end
 
+
+  #TECHDEBT move to instructor controller
   def instructor_confirm
     @other_instructor
     @instructor_available
