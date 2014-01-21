@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140115144429) do
+ActiveRecord::Schema.define(version: 20140121183014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,11 +56,23 @@ ActiveRecord::Schema.define(version: 20140115144429) do
     t.boolean  "instructor2_available"
   end
 
+  create_table "email_templates", force: true do |t|
+    t.string   "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "instructors", force: true do |t|
     t.string   "name"
     t.string   "email"
     t.string   "telephone_number"
     t.string   "post_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "school_email_templates", force: true do |t|
+    t.string   "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

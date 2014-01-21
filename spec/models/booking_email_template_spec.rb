@@ -22,7 +22,7 @@ describe BookingEmailTemplate do
     specify do
       school = School.new teacher_name: "John"
 
-      booking_email_template = BookingEmailTemplate.singular_template 
+      booking_email_template = BookingEmailTemplate.singular_template
       booking_email_template.body = "Dear <name>, nice email"
       booking_email_template.save
       body = BookingEmailTemplate.email_body_for school

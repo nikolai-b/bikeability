@@ -4,7 +4,7 @@
   ,
 %p
   Dates: 
-  = @booking.start_time
+  = @booking.start_time.to_date
   ,
 %p
   School: 
@@ -12,6 +12,6 @@
   ,
   = @school.postcode
 %p
-  Please confirm you avaliability 
+  Please confirm you <a href=" 
   = @confirm_url
-
+  ">avaliability</a>

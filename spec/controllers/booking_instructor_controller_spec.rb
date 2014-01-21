@@ -45,6 +45,18 @@ describe BookingInstructorsController do
       response.should redirect_to @booking
       flash[:notice].should eql("#{@instructor3.name} is not on this booking")
     end
+
+    it "assigns the other instructor on the requested booking" do
+      get :edit, {:id => @booking.to_param, instructor_id: @instructor1.to_param}
+      assigns(:other_instructor).should eq(@instructor2)
+    end
+
+    it "assigns the instructor on the requested booking" do
+      get :edit, {:id => @booking.to_param, instructor_id: @instructor1.to_param}
+      assigns(:instructor_available).should eq(:instructor1_available)
+    end
+
+
   end
 
 end

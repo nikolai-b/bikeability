@@ -24,7 +24,7 @@ class BookingInstructorsController < ApplicationController
   # PATCH/PUT /instructors/1.json
   def update
     if @instructor.update(instructor_params)
-      format.html { redirect_to @instructor, notice: 'Instructor was successfully updated.' }
+      format.html { redirect_to @booking, notice: 'Instructor confirmation was successfully updated.' }
     else
       format.html { render action: 'edit' }
     end
@@ -33,6 +33,6 @@ class BookingInstructorsController < ApplicationController
   private
   # Never trust parameters from the scary internet, only allow the white list through.
   def booking_instructors_params
-    params.require(:instructor).permit(:name, :email, :telephone_number, :post_code)
+    params.require(:instructor_available)
   end
 end

@@ -1,0 +1,14 @@
+%h1 Editing school_email_template
+
+= form_for @school_email_template do |f|
+  - if @school_email_template.errors.any?
+    #error_explanation
+      %ul
+        - @school_email_template.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :body
+    = f.text_area :body
+  .actions
+    = f.submit 'Save'

@@ -1,4 +1,5 @@
 class BookingEmailTemplatesController < ApplicationController
+
   def edit
     booking_email_template
   end

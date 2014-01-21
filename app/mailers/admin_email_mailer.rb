@@ -30,7 +30,7 @@ class AdminEmailMailer < ActionMailer::Base
     @booking = booking
     @instructor = Instructor.find(instructor_id)
     @school = School.find(booking.school_id)
-    @confirm_url = booking_url(booking) + '/instructors/' + instructor_id.to_s
+    @confirm_url = booking_url(booking) + '/instructors/' + instructor_id.to_s + '/edit'
     mail(to: @instructor.email,
          subject: "Bikeability at #{@school.school_name}")
   end
