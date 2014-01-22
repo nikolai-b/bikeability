@@ -1,6 +1,10 @@
 require 'capybara_helper'
 
 feature "Create a booking email", type: :feature do
+  before do
+    EmailTemplate.create!(template_name: "instructor", body: "test")
+  end
+
   scenario "edit booking email template" do
     sign_in :admin
 
@@ -8,11 +12,9 @@ feature "Create a booking email", type: :feature do
     page.should have_content "Booking email template was successfully updated."
 
    # send_new_email "teacher@example.com"
-    create_new_instructor "Chris Martin" , "chris.martin@example.com"
-    create_new_instructor "Brett", "brett@example.com"
 
-
-    create_new_booking
+    create_new_booking("Chris Martin" , "chris.martin@example.com", "Brett", "brett@example.com")
+       
     page.should have_content "Booking created. Email sent to teacher. Emails sent to Chris Martin and Brett"
 
     open_email "teacher.book@example.com"
@@ -59,7 +61,7 @@ feature "Create a booking email", type: :feature do
     visit "/booking_email_template/edit"
 
     fill_in "Body", with: <<-EMAIL.gsub(/^\s/, "")
-      Dear <name>,
+      Dear <instructor_name>,
 
       <booking_link: Book here>
 
@@ -88,35 +90,4 @@ feature "Create a booking email", type: :feature do
     click_on "Send email"
   end
 
-  def create_new_instructor name, email
-    visit "/instructors"
-    click_on "New Instructor"
-    
-    fill_in "Name", with: name
-    fill_in "Email", with: email
-    fill_in "Telephone number", with: "0779"
-
-    click_on "Save"
-  end
-
-  def create_new_booking
-#    open_email "teacher@example.com"
-    school = School.create school_name: "Booking School", email: "teacher.book@example.com", teacher_name: "Mr Booking"
-    visit "/schools"
-    click_on "Create booking"
-#    current_email.should have_content 'Nice email'
-#    current_email.find_link('a').click
-
-    page.should have_content "Mr Booking"
-    page.should have_content "Booking School"
-
-    fill_in "Start date", with: "13/01/2015"
-    fill_in "Number of children", with: 17
-    fill_in "Required number of bikes", with: 13
-    fill_in "Required number of helmets", with: 17
-    select("Chris Martin", :from => "Instructor1")
-    select("Brett", :from => "Instructor2")
-
-    click_on "Create booking"
-  end
 end

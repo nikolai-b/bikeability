@@ -30,9 +30,29 @@ class AdminEmailMailer < ActionMailer::Base
     @booking = booking
     @instructor = Instructor.find(instructor_id)
     @school = School.find(booking.school_id)
+    @body = EmailTemplate.find_by(template_name: "instructor").body
+    @body = replace_link
     @confirm_url = booking_url(booking) + '/instructors/' + instructor_id.to_s + '/edit'
     mail(to: @instructor.email,
          subject: "Bikeability at #{@school.school_name}")
   end
 
+  private
+
+  def replace_link url=nil 
+    regex = /\<booking_link\:([^\>]*)\>/
+    match = @body.match regex
+    if match
+      link_text = match[1].strip
+      @body = @body.gsub(regex, "<a rel=\"booking_link\" href=\"#{url}\">#{link_text}</a>")
+    end
+
+    regex = /\<instructor_name\>/
+    @body = @body.gsub(regex, @instructor.name)
+
+    regex = /\<start_date\>/
+    @body = @body.gsub(regex, @booking.start_time.to_date.to_s)
+    
+  end
 end
+

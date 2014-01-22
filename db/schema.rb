@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140121183014) do
+ActiveRecord::Schema.define(version: 20140122123522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,9 +37,14 @@ ActiveRecord::Schema.define(version: 20140121183014) do
   end
 
   create_table "booking_instructors", force: true do |t|
+    t.integer  "booking_id"
+    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "booking_instructors", ["booking_id"], name: "index_booking_instructors_on_booking_id", using: :btree
+  add_index "booking_instructors", ["school_id"], name: "index_booking_instructors_on_school_id", using: :btree
 
   create_table "bookings", force: true do |t|
     t.integer  "school_id"
@@ -57,10 +62,13 @@ ActiveRecord::Schema.define(version: 20140121183014) do
   end
 
   create_table "email_templates", force: true do |t|
+    t.string   "template_name"
     t.string   "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "email_templates", ["template_name"], name: "index_email_templates_on_template_name", unique: true, using: :btree
 
   create_table "instructors", force: true do |t|
     t.string   "name"

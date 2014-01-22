@@ -1,0 +1,12 @@
+%h1 Editing email_template
+
+= render 'form'
+
+%h2 Help
+Any text inside &lt; &gt; will be replaced in the email.  Valid replacements are
+<br/>
+&lt;instructor_name&gt;, &lt;start_date&gt;
+<br/><br/>
+= link_to 'Show', @email_template
+\|
+= link_to 'Back', email_templates_path

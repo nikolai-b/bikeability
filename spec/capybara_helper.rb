@@ -34,6 +34,45 @@ module UserSigninSteps
   def sign_out
     click_on "Logout"
   end
+
+  def create_new_booking instructor1_name, instructor1_email, instructor2_name, instructor2_email
+    school = School.create school_name: "Booking School", email: "teacher.book@example.com", teacher_name: "Mr Booking"
+    create_new_instructor instructor1_name, instructor1_email
+    create_new_instructor instructor2_name, instructor2_email
+
+    visit "/schools"
+    click_on "Create booking"
+#    current_email.should have_content 'Nice email'
+#    current_email.find_link('a').click
+
+    page.should have_content "Mr Booking"
+    page.should have_content "Booking School"
+
+    fill_in "Start date", with: "13/01/2015"
+    fill_in "Number of children", with: 17
+    fill_in "Required number of bikes", with: 13
+    fill_in "Required number of helmets", with: 17
+    select(instructor1_name, :from => "Instructor1")
+    select(instructor2_name, :from => "Instructor2")
+
+    click_on "Create booking"
+  end
+  
+  def create_default_school
+    School.create!(school_name: "Default School", teacher_name: "Ms Teacher", email: "school@example.com")
+  end
+  
+  def create_new_instructor name, email
+    visit "/instructors"
+    click_on "New Instructor"
+
+    fill_in "Name", with: name
+    fill_in "Email", with: email
+    fill_in "Telephone number", with: "0779"
+
+    click_on "Save"
+  end
+
 end
 
 

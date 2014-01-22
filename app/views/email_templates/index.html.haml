@@ -1,0 +1,19 @@
+%h1 Listing email_templates
+
+%table
+  %tr
+    %th Template name
+    %th Body
+    %th
+    %th
+    %th
+
+  - @email_templates.each do |email_template|
+    %tr
+      %td= email_template.template_name
+      %td= email_template.body
+      %td= link_to 'Show', email_template
+      %td= link_to 'Edit', edit_email_template_path(email_template)
+
+%br
+

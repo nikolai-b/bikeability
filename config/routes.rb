@@ -1,5 +1,7 @@
 Bikeability::Application.routes.draw do
 
+  resources :email_templates
+
   resource :school_email_template
 
   resources :instructors
