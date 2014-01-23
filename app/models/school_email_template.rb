@@ -1,3 +1,0 @@
-class SchoolEmailTemplate < EmailTemplate
-
-end

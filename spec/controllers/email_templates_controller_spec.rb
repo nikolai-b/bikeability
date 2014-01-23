@@ -25,7 +25,7 @@ describe EmailTemplatesController do
   # This should return the minimal set of attributes required to create a valid
   # EmailTemplate. As you add validations to EmailTemplate, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "body" => "MyString" , "body" => "MyBody"} }
+  let(:valid_attributes) { { "template_name" => "MyString" , "body" => "MyBody"} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in

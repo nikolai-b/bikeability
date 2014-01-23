@@ -1,6 +1,5 @@
 class SchoolsController < ApplicationController
   before_action :set_school, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, only: [:index, :new, :create, :destroy]
   # GET /schools
   # GET /schools.json
   def index

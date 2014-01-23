@@ -21,4 +21,10 @@ class Booking < ActiveRecord::Base
     uuid
   end
 
+  def email current_user
+    EmailMailer.school_email(self, current_user, 'new')
+    EmailMailer.instructor_email(self, current_user, instructor1_id)
+    EmailMailer.instructor_email(self, current_user, instructor2_id)
+  end
+
 end

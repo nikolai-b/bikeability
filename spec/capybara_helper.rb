@@ -14,7 +14,6 @@ Capybara.register_driver :webkit do |app|
 end
 
 Capybara.javascript_driver = :webkit
-
 module UserSigninSteps
   def sign_in type, email=nil, password="password"
     user = if email.nil?
@@ -34,34 +33,14 @@ module UserSigninSteps
   def sign_out
     click_on "Logout"
   end
+end
 
-  def create_new_booking instructor1_name, instructor1_email, instructor2_name, instructor2_email
-    school = School.create school_name: "Booking School", email: "teacher.book@example.com", teacher_name: "Mr Booking"
-    create_new_instructor instructor1_name, instructor1_email
-    create_new_instructor instructor2_name, instructor2_email
+module CreateNewObjects
 
-    visit "/schools"
-    click_on "Create booking"
-#    current_email.should have_content 'Nice email'
-#    current_email.find_link('a').click
-
-    page.should have_content "Mr Booking"
-    page.should have_content "Booking School"
-
-    fill_in "Start date", with: "13/01/2015"
-    fill_in "Number of children", with: 17
-    fill_in "Required number of bikes", with: 13
-    fill_in "Required number of helmets", with: 17
-    select(instructor1_name, :from => "Instructor1")
-    select(instructor2_name, :from => "Instructor2")
-
-    click_on "Create booking"
+  def create_default_school email
+    School.create!(school_name: "Default School", teacher_name: "Ms Teacher", email: email)
   end
-  
-  def create_default_school
-    School.create!(school_name: "Default School", teacher_name: "Ms Teacher", email: "school@example.com")
-  end
-  
+
   def create_new_instructor name, email
     visit "/instructors"
     click_on "New Instructor"
@@ -73,16 +52,35 @@ module UserSigninSteps
     click_on "Save"
   end
 
+  def create_email_templates
+    template_admin = EmailTemplate.find_by(template_name: "admin")
+    template_booking = EmailTemplate.find_by(template_name: "booking")
+    template_school = EmailTemplate.find_by(template_name: "school")
+    template_instructor = EmailTemplate.find_by(template_name: "instructor")
+    @template_instructor = EmailTemplate.create!(template_name: "instructor", body: "Test") unless template_instructor
+    @template_school = EmailTemplate.create!(template_name: "school", body: "Test") unless template_school
+    @template_booking = EmailTemplate.create!(template_name: "booking", body: "Test") unless template_booking
+    @template_admin = EmailTemplate.create!(template_name: "admin", body: "Test") unless template_admin 
+  end
+
+  def destroy_email_templates
+    template_admin = EmailTemplate.find_by(template_name: "admin")
+    template_booking = EmailTemplate.find_by(template_name: "booking")
+    template_school = EmailTemplate.find_by(template_name: "school")
+    template_instructor = EmailTemplate.find_by(template_name: "instructor")
+    template_admin.destroy! if template_admin
+    template_instructor.destroy! if template_instructor
+    template_booking.destroy! if template_booking
+    template_school.destroy! if template_school
+  end
 end
-
-
 
 RSpec.configure do |config|
 
   config.after do
     if !$saved_and_opened_page &&
-        (example.metadata[:type] == :feature) &&
-        example.exception.present?
+      (example.metadata[:type] == :feature) &&
+      example.exception.present?
       save_and_open_page
       $saved_and_opened_page = true
     end
@@ -91,6 +89,7 @@ RSpec.configure do |config|
 
   config.include Capybara::DSL #https://github.com/rspec/rspec-rails/issues/360
   config.include UserSigninSteps
+  config.include CreateNewObjects
 
   config.use_transactional_examples = true
   config.infer_base_class_for_anonymous_controllers = false

@@ -7,3 +7,6 @@ Instructor.create!(name: 'Chris M', email: 'chris.m@example.com', telephone_numb
 Instructor.create!(name: 'Graham', email: 'graham.m@example.com', telephone_number: '077...', post_code: 'LS..')
 
 EmailTemplate.create!(template_name: "instructor", body: "Test")
+EmailTemplate.create!(template_name: "school", body: "Test")
+EmailTemplate.create!(template_name: "booking", body: "Test")
+EmailTemplate.create!(template_name: "admin", body: "Test")

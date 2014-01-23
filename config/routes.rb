@@ -1,12 +1,7 @@
 Bikeability::Application.routes.draw do
 
   resources :email_templates
-
-  resource :school_email_template
-
   resources :instructors
-
-  resource :booking_email_template
 
   devise_for :users, :skip => :registrations
     as :user do
@@ -17,14 +12,13 @@ Bikeability::Application.routes.draw do
   root 'welcome#index'
 
   resources :schools, :shallow => true do
-    resources :booking_emails
     resources :bookings
   end
   
   get '/bookings', to: 'bookings#index'
 
-  #TECHDEBT switch to instructor controller
-  get 'bookings/:id/instructors/:instructor_id/edit', to: "booking_instructors#edit"
+  post 'send_email/:school', to: "send_email#create", as: "create_send_email"
+  get 'bookings/:id/instructors/:instructor_id/edit', to: "booking_instructors#edit", as: "edit_booking_instructors"
   #get index
   #get id show
 

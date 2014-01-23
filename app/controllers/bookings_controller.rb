@@ -1,6 +1,6 @@
-class BookingsController < UnauthenticatedController
-  before_action :set_booking_and_school, only: [:show, :edit, :update, :destroy, :instructor_confirm]
-  before_filter :authenticate_user!, only: [:index, :new, :create, :destroy]
+class BookingsController < ApplicationController
+  before_action :set_booking_and_school, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :authenticate_user!, only: [:show, :edit, :update]
 
   # GET /bookings
   # GET /bookings.json
@@ -20,7 +20,6 @@ class BookingsController < UnauthenticatedController
   # GET /bookings/new
   def new
     @booking = Booking.new
-    #TECHDEBT build instructors
   end
 
   # GET /bookings/1/edit
@@ -41,13 +40,7 @@ class BookingsController < UnauthenticatedController
           @booking.booking_assets.create(booking_file: file)
         end
       end
-      email = AdminEmailMailer.school_email(@booking, current_user, 'new')
-
-      email.deliver
-      email_instructor1 = AdminEmailMailer.instructor_email(@booking, current_user, @booking.instructor1_id)
-      email_instructor2 = AdminEmailMailer.instructor_email(@booking, current_user, @booking.instructor2_id)
-      email_instructor1.deliver
-      email_instructor2.deliver
+      @booking.email current_user
       instructor1 = Instructor.find(@booking.instructor1_id)
       instructor2 = Instructor.find(@booking.instructor2_id)
       redirect_to [@school, @booking], notice: "Booking created. Email sent to teacher. Emails sent to #{instructor1.name} and #{instructor2.name}."
