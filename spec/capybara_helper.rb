@@ -50,6 +50,7 @@ module CreateNewObjects
     fill_in "Telephone number", with: "0779"
 
     click_on "Save"
+    Instructor.find_by(name: name)
   end
 
   def create_email_templates
