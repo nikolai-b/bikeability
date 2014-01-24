@@ -1,11 +1,10 @@
-- model_class = Booking
 .page-header
-  %h1=t '.title', :default => "Booking"
+  %h1=t '.title', :default => "Bookings"
 %table.table.table-striped
   %thead
     %tr
-      %th= sortable "school_name" #model_class.human_attribute_name(:school_name)
-      %th= sortable "start_time" #model_class.human_attribute_name(:teacher_name)
+      %th= sortable "school_name" 
+      %th= sortable "start_time" 
       %th Number of children
       %th Required bikes
       %th Required helmets

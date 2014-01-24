@@ -4,7 +4,11 @@ class InstructorsController < ApplicationController
   # GET /instructors
   # GET /instructors.json
   def index
-    @instructors = Instructor.all
+    if params[:sort]
+      sort_column
+    else
+      @instructors = Instructor.all
+    end
   end
 
   # GET /instructors/1
@@ -70,5 +74,11 @@ class InstructorsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def instructor_params
       params.require(:instructor).permit(:name, :email, :telephone_number, :post_code)
+    end
+
+    def sort_column
+      direction = !%w[asc desc].include?(params[:direction]) ? "asc" : params[:direction]
+      sort = !"%w[name email]".include?(params[:sort]) ? "name" : params[:sort]
+      @instructors = Instructor.order(params[:sort] +" " +params[:direction])
     end
 end

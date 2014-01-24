@@ -30,6 +30,7 @@ class EmailTemplatesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_email_template
+      @template_create ||= EmailTemplate.create_templates
       @email_template = EmailTemplate.find_by(template_name: params[:id])
     end
 

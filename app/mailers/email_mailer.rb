@@ -10,20 +10,20 @@ class EmailMailer < ActionMailer::Base
          body: "There is a #{new_or_updated} Bikeability booking requested by #{booking.school.school_name}. More info  #{url}")
   end
 
-  def school_email(booking, admin, new_or_updated)
+  def school_email(booking, admin, host)
     url = edit_booking_url(booking)
     booking_assets = BookingAsset.where(:booking_id => booking.id)
     asset_urls = Array.new
     booking_assets.each do |asset|
-      asset_urls.push(asset.booking_file.url)
+      attachments[asset.booking_file_file_name.to_s] = File.read(asset.booking_file.path) #open("http://#{host}#{asset.booking_file.url}").read 
     end
-    asset_urls_joined = asset_urls.join(' ')
-    school = School.find(booking.school_id)
-    formatted_booking_date = booking.start_time.strftime("%A the #{booking.start_time.day.ordinalize} of %B, %Y")
-    email = mail(to: school.email,
+    @school = School.find(booking.school_id)
+    @booking = booking
+    body = EmailTemplate.find_by(template_name: "school").body
+    body = replace_text body
+    email = mail(to: @school.email,
          subject: "Your Bikeability booking has been confirmed!",
-         body: "#{asset_urls} - Your Bikeability booking starting on #{formatted_booking_date} for #{booking.num_children} children has been confirmed!  
-         When you know the number of bikes please fill it in #{url}")
+         body: body, content_type: "text/html")
     email.deliver
   end
 

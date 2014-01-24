@@ -40,7 +40,7 @@ class BookingsController < ApplicationController
           @booking.booking_assets.create(booking_file: file)
         end
       end
-      @booking.email current_user
+      @booking.email current_user, request.host_with_port
       instructor1 = Instructor.find(@booking.instructor1_id)
       instructor2 = Instructor.find(@booking.instructor2_id)
       redirect_to [@school, @booking], notice: "Booking created. Email sent to teacher. Emails sent to #{instructor1.name} and #{instructor2.name}."

@@ -7,6 +7,6 @@
           %li= msg
   .field
     = f.label :body
-    = f.text_field :body
+    = f.text_area :body, class: "field span6", rows: "15"
   .actions
     = f.submit 'Save'

@@ -8,9 +8,6 @@ describe Booking do
 
       booking.reload
       booking.uuid.should == uuid
-      
-
-
    end
   end
 end

@@ -42,8 +42,7 @@ module CreateNewObjects
   end
 
   def create_new_instructor name, email
-    visit "/instructors"
-    click_on "New Instructor"
+    visit new_instructor_path
 
     fill_in "Name", with: name
     fill_in "Email", with: email
@@ -51,28 +50,6 @@ module CreateNewObjects
 
     click_on "Save"
     Instructor.find_by(name: name)
-  end
-
-  def create_email_templates
-    template_admin = EmailTemplate.find_by(template_name: "admin")
-    template_booking = EmailTemplate.find_by(template_name: "booking")
-    template_school = EmailTemplate.find_by(template_name: "school")
-    template_instructor = EmailTemplate.find_by(template_name: "instructor")
-    @template_instructor = EmailTemplate.create!(template_name: "instructor", body: "Test") unless template_instructor
-    @template_school = EmailTemplate.create!(template_name: "school", body: "Test") unless template_school
-    @template_booking = EmailTemplate.create!(template_name: "booking", body: "Test") unless template_booking
-    @template_admin = EmailTemplate.create!(template_name: "admin", body: "Test") unless template_admin 
-  end
-
-  def destroy_email_templates
-    template_admin = EmailTemplate.find_by(template_name: "admin")
-    template_booking = EmailTemplate.find_by(template_name: "booking")
-    template_school = EmailTemplate.find_by(template_name: "school")
-    template_instructor = EmailTemplate.find_by(template_name: "instructor")
-    template_admin.destroy! if template_admin
-    template_instructor.destroy! if template_instructor
-    template_booking.destroy! if template_booking
-    template_school.destroy! if template_school
   end
 end
 

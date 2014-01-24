@@ -1,19 +1,15 @@
-%h1 Listing email_templates
-
-%table
-  %tr
-    %th Template name
-    %th Body
-    %th
-    %th
-    %th
-
-  - @email_templates.each do |email_template|
+- model_class = EmailTemplate
+.page-header
+  %h1=t '.title', :default => "Email Templates"
+%table.table.table-striped
+  %thead
     %tr
-      %td= email_template.template_name
-      %td= email_template.body
-      %td= link_to 'Show', email_template
-      %td= link_to 'Edit', edit_email_template_path(email_template)
-
-%br
+      %th= model_class.human_attribute_name(:template_name)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @email_templates.each do |email_template|
+      %tr
+        %td= link_to email_template.template_name, email_template_path(email_template)
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_email_template_path(email_template), :class => 'btn btn-mini'
 
