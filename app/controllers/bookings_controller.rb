@@ -20,19 +20,21 @@ class BookingsController < ApplicationController
   # GET /bookings/new
   def new
     @booking = Booking.new
+    @booking_instructors = 2.times { @booking.booking_instructors.build }
+    @school = School.find(params[:school_id])
+    @form_object = [@school,@booking]
   end
 
   # GET /bookings/1/edit
   def edit
+    @form_object = @booking
   end
 
   # POST /bookings
   # POST /bookings.json
   def create
-    @booking = Booking.new(booking_params)
-    # CODESMELL
-    @booking.school_id = params[:school_id]
-
+    @school = School.find(params[:school_id])
+    @booking = @school.bookings.create(booking_params)
     if @booking.save
       files = params[:booking][:booking_asset_array]
       if files
@@ -41,9 +43,7 @@ class BookingsController < ApplicationController
         end
       end
       @booking.email current_user, request.host_with_port
-      instructor1 = Instructor.find(@booking.instructor1_id)
-      instructor2 = Instructor.find(@booking.instructor2_id)
-      redirect_to [@school, @booking], notice: "Booking created. Email sent to teacher. Emails sent to #{instructor1.name} and #{instructor2.name}."
+      redirect_to @booking, notice: "Booking created. Email sent to teacher and instructors."
     else
       render action: 'new'
     end
@@ -73,20 +73,6 @@ class BookingsController < ApplicationController
   end
 
 
-  #TECHDEBT move to instructor controller
-  def instructor_confirm
-    @other_instructor
-    @instructor_available
-
-    if :instructor_id == @booking.instructor1_id
-      @other_instructor = Instructor.find(@booking.instructor2_id)
-      @instructor_available = :instructor1_available
-    else
-      @other_instructor = Instructor.find(@booking.instructor1_id)
-      @instructor_available = :instructor2_available
-    end
-
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -106,7 +92,6 @@ class BookingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
       params.require(:booking).permit(:school_id, :start_time, :num_children, :required_bikes, :required_helmets, 
-                                      :booking_asset_array, :instructor1_id, :instructor2_id, :direction, :sort,
-                                      :instructor1_available, :instructor2_available)
+                                      booking_instructors_attributes: [:instructor_id])
     end
 end

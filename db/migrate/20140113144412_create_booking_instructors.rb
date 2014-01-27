@@ -1,11 +1,10 @@
 class CreateBookingInstructors < ActiveRecord::Migration
   def change
     create_table :booking_instructors do |t|
-      t.integer :booking_id
-      t.integer :school_id
+      t.belongs_to :booking, index: true
+      t.belongs_to :instructor, index: true
+      t.boolean :available
       t.timestamps
     end
-    add_index :booking_instructors, :booking_id
-    add_index :booking_instructors, :school_id
   end
 end

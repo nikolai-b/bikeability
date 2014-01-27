@@ -26,25 +26,16 @@ ActiveRecord::Schema.define(version: 20140122123522) do
     t.integer  "booking_id"
   end
 
-  create_table "booking_email_templates", force: true do |t|
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "booking_emails", force: true do |t|
-    t.string "body"
-  end
-
   create_table "booking_instructors", force: true do |t|
     t.integer  "booking_id"
-    t.integer  "school_id"
+    t.integer  "instructor_id"
+    t.boolean  "available"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "booking_instructors", ["booking_id"], name: "index_booking_instructors_on_booking_id", using: :btree
-  add_index "booking_instructors", ["school_id"], name: "index_booking_instructors_on_school_id", using: :btree
+  add_index "booking_instructors", ["instructor_id"], name: "index_booking_instructors_on_instructor_id", using: :btree
 
   create_table "bookings", force: true do |t|
     t.integer  "school_id"
@@ -55,11 +46,9 @@ ActiveRecord::Schema.define(version: 20140122123522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "uuid"
-    t.integer  "instructor1_id"
-    t.integer  "instructor2_id"
-    t.boolean  "instructor1_available"
-    t.boolean  "instructor2_available"
   end
+
+  add_index "bookings", ["school_id"], name: "index_bookings_on_school_id", using: :btree
 
   create_table "email_templates", force: true do |t|
     t.string   "template_name"
@@ -75,12 +64,6 @@ ActiveRecord::Schema.define(version: 20140122123522) do
     t.string   "email"
     t.string   "telephone_number"
     t.string   "post_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "school_email_templates", force: true do |t|
-    t.string   "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -21,14 +21,14 @@
   %b Other Instructor
   = @other_instructor.name 
 %p
-= form_for @booking do |f|
+= form_for :booking_instructors do |f|
   .field
-    = f.label @instructor_available, "Are you available?"
-    = f.radio_button @instructor_available, :true
-    = label @instructor_available, "Yes", :class => "radio inline"
+    = f.label :available, "Are you available?"
+    = f.radio_button :available, :true
+    = label :available, "Yes", :class => "radio inline"
     <br />
-    = f.radio_button @instructor_available, :false, checked: true
-    = label @instructor_available, "No", :class => "radio inline"
+    = f.radio_button :available, :false, checked: true
+    = label :available, "No", :class => "radio inline"
     .actions
     = f.submit "Confirm"
 

@@ -1,14 +1,5 @@
--if params[:school_id] 
-  - form_path = [@school,@booking] 
-  - create_or_edit = 'Create booking'
-  - @school = School.find(params[:school_id])
--else
-  - form_path = @booking
-  - create_or_edit = 'Edit booking'
-
 %h2 School
-= @school.school_name
-
+= @school.school_name 
 %h2 Teacher name
 = @school.teacher_name
 
@@ -18,8 +9,7 @@
 = @school.address_line_2
 = @school.postcode
 
-- form_path = params[:school_id] ? [@school,@booking] : @booking
-= form_for form_path, :html => { :multipart => true } do |f|
+= form_for @form_object, :html => { :multipart => true } do |f|
   - if @booking.errors.any?
     #error_explanation
       %h2= "#{pluralize(@booking.errors.count, "error")} prohibited this booking from being saved:"
@@ -52,15 +42,14 @@
     = f.label :required_helmets, "Required number of helmets"
     = f.number_field :required_helmets
   - if user_signed_in?
+    - num_instructor = 1
+    = f.fields_for :booking_instructors do |i|
+      = i.label :instructor_id, "Instructor #{num_instructor}"
+      = i.select :instructor_id, Instructor.all.collect {|p| [ p.name, p.id ] }
+      - num_instructor += 1
+  - if params[:school_id]
     .field
-      = f.label :instructor1_id, "Instructor1"
-      = f.select :instructor1_id, Instructor.all.collect {|p| [ p.name, p.id ] }, {include_blank: 'None'}
-    .field
-      = f.label :instructor2_id, "Instructor2"
-      = f.select :instructor2_id, Instructor.all.collect {|p| [ p.name, p.id ] }, {include_blank: 'None'}
-    - if params[:school_id]
-      .field
-        = f.label :booking_asset_array, "Booking documents"
-        = f.file_field :booking_asset_array, :multiple =>:true
+      = f.label :booking_asset_array, "Booking documents"
+      = f.file_field :booking_asset_array, :multiple =>:true
   .actions
-    = f.submit create_or_edit
+    = f.submit "Save"

@@ -1,6 +1,7 @@
 require 'capybara_helper'
 feature "Send reminder emails", type: feature do
   scenario "reminders" do
+    sign_in :admin
     EmailTemplate.create_templates
     admin_school_warning = EmailTemplate.find_by(template_name: "admin_school_warning")
     admin_school_warning.update(body: "<school_name>")

@@ -2,7 +2,6 @@ class EmailMailer < ActionMailer::Base
   default from: 'admin@bikeability.herokuapp.com'
 
   def admin_email(booking, admin, new_or_updated)
-    # TECHDEBT 
     url = edit_booking_url(booking)
     capitalize_new_or_updated = new_or_updated.capitalize
     mail(to: admin.email,
@@ -11,45 +10,40 @@ class EmailMailer < ActionMailer::Base
   end
 
   def school_email(booking, admin, host)
-    url = edit_booking_url(booking)
-    booking_assets = BookingAsset.where(:booking_id => booking.id)
-    asset_urls = Array.new
-    booking_assets.each do |asset|
+    attachments_array = Array.new
+    booking.booking_assets.each do |asset|
       attachments[asset.booking_file_file_name.to_s] = File.read(asset.booking_file.path) #open("http://#{host}#{asset.booking_file.url}").read 
     end
-    @school = School.find(booking.school_id)
+    @school = booking.school
     @booking = booking
-    body = EmailTemplate.find_by(template_name: "school").body
-    body = replace_text body
-    email = mail(to: @school.email,
-         subject: "Your Bikeability booking has been confirmed!",
-         body: body, content_type: "text/html")
-    email.deliver
+    send_email(@school.email, admin, "Your Bikeability booking has been confirmed!", 'school', attachments)
   end
 
-  def instructor_email(booking, admin, instructor_id)
+  def instructor_email(booking, admin)
     @booking = booking
-    @instructor = Instructor.find(instructor_id)
-    @school = School.find(booking.school_id)
-    body = EmailTemplate.find_by(template_name: "instructor").body
-    @confirm_url = booking_url(booking) + '/instructors/' + instructor_id.to_s + '/edit'
-    body = replace_text body
-    email = mail(to: @instructor.email,
-         subject: "Bikeability at #{@school.school_name}",
-         body: body,
-         content_type: "text/html" )
-    email.deliver
+    @school = booking.school
+    booking_instructors = @booking.booking_instructors.where(available: nil)
+    booking_instructors.each do |booking_instructor|
+      @instructor = booking_instructor.instructor
+      @confirm_url = booking_url(booking) + '/instructors/' + @instructor.id.to_s + '/edit'
+      send_email(@instructor.email, admin, "Bikeability at #{@school.school_name}", 'instructor')
+    end
   end
 
   def booking_email(school, admin, body)
     @school = school
-    body = replace_text body
-    email = mail(to: school.email,
-         reply_to: admin.email,
-         bcc: admin.email,
-         subject: 'Bikeability booking',
-         content_type: "text/html",
-         body: body)
+    send_email(school.email, admin, 'Bikeability booking', 'booking')
+  end
+
+  def send_email(to_email, admin, subject, template_name, attachments=nil)
+    email_template = EmailTemplate.find_by(template_name: template_name)
+    body = replace_text email_template.body
+    email = mail(to: to_email,
+                 reply_to: admin.email,
+                 bcc: admin.email,
+                 subject: subject,
+                 body: body,
+                 content_type: "text/html")
     email.deliver
   end
 
@@ -62,7 +56,7 @@ class EmailMailer < ActionMailer::Base
       begin
         replacement = eval(replacement_string) 
       rescue
-      
+
       else
         body = body.gsub(regex, replacement.to_s)
       end

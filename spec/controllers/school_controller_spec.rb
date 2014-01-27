@@ -162,9 +162,9 @@ describe SchoolsController do
     it "school also destroys dependent bookings" do
       school = School.create! valid_attributes
       school2 = School.create! valid_attributes
-      booking = Booking.create!(num_children: 10, school_id: school.id)
-      booking2 = Booking.create!(num_children: 10, school_id: school.id)
-      booking3 = Booking.create!(num_children: 10, school_id: school2.id)
+      booking = Booking.create!(start_time: Time.now, num_children: 10, school_id: school.id)
+      booking2 = Booking.create!(start_time: Time.now, num_children: 10, school_id: school.id)
+      booking3 = Booking.create!(start_time: Time.now, num_children: 10, school_id: school2.id)
       expect {
         delete :destroy, {:id => school.to_param}, valid_session
       }.to change(Booking, :count).by(-2)

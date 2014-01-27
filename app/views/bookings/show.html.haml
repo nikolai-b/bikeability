@@ -1,4 +1,3 @@
-- @school = School.find_by(id: @booking.school_id)
 %p
   %b School :
   = @booking.school.school_name
@@ -18,10 +17,8 @@
 %p
   %b Required helmets:
   = @booking.required_helmets
-%p
-  %b Instructor1
-  = Instructor.find(@booking.instructor1_id).name
-%p
-  %b Instructor2
-  = Instructor.find(@booking.instructor2_id).name
+- @booking.instructors.each do |instructor| 
+  %p
+    %b Instructor
+    = instructor.name
 = link_to 'Edit', edit_booking_path(@booking)

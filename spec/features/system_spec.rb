@@ -52,7 +52,9 @@ feature "Create a booking email", type: :feature do
     email_template_school = EmailTemplate.find_by(template_name: "school")
     email_template_school.update(body: "Your Bikeability booking starting on <formatted_date> for <number_of_children> Please update <a href=\"<booking_url>\">booking</a>")
     booking = create_new_booking school, instructor1, instructor2
-    page.should have_content "Booking created. Email sent to teacher. Emails sent to Chris Martin and Brett"
+    page.should have_content "Booking created. Email sent to teacher and instructors."
+    page.should have_content "Chris Martin"
+    page.should have_content "Brett"
     sign_out
 
     open_email "teacher.book@example.com"
@@ -64,12 +66,10 @@ feature "Create a booking email", type: :feature do
     find_field('Required number of bikes').value.should eq '13'
     page.should_not have_content "Chris Martin"
 
-    sign_in :admin
-    open_email "chris.martin@example.com"
+    open_email "brett@example.com"
 
-    current_email.should have_content 'Hi Chris Martin'
+    current_email.should have_content 'Hi Brett'
 
-    sign_out
     current_email.find_link('a').click
     page.should have_content "Are you available"
 
@@ -91,11 +91,11 @@ feature "Create a booking email", type: :feature do
     fill_in "Number of children", with: 17
     fill_in "Required number of bikes", with: 13
     fill_in "Required number of helmets", with: 17
-    select(instructor1.name, :from => "Instructor1")
-    select(instructor2.name, :from => "Instructor2")
+    select(instructor1.name, :from => "Instructor 1")
+    select(instructor2.name, :from => "Instructor 2")
 
-    click_on "Create booking"
-    Booking.find_by(school_id: school.id)
+    click_on "Save"
+    Booking.last
   end
 
   def edit_booking_email_template
