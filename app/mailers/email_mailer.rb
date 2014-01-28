@@ -35,19 +35,39 @@ class EmailMailer < ActionMailer::Base
     send_email(school.email, admin, 'Bikeability booking', 'booking')
   end
 
-  def send_email(to_email, admin, subject, template_name, attachments=nil)
-    email_template = EmailTemplate.find_by(template_name: template_name)
-    body = replace_text email_template.body
-    email = mail(to: to_email,
-                 reply_to: admin.email,
-                 bcc: admin.email,
-                 subject: subject,
-                 body: body,
-                 content_type: "text/html")
-    email.deliver
+  def admin_school_warning(booking, admin)
+    @booking = booking
+    @school = booking.school
+    send_email(admin.email, admin, "#{@school.school_name} has not replied", 'admin_school_warning')
+  end
+
+  def admin_instructor_warning(booking_instructor, admin)
+    @booking = booking_instructor.booking
+    @instructor = booking_instructor.instructor
+    @school = @booking.school
+    send_email(admin.email, admin, "#{@instructor.name} has not confirmed availablity at #{@school.school_name}", 'admin_instructor_warning')
   end
 
   private
+  
+  def send_email(to_email, admin, subject, template_name, attachments=nil)
+    email_template = EmailTemplate.find_by(template_name: template_name)
+    body = replace_text email_template.body
+    email = if to_email == admin.email
+              mail(to: to_email,
+                   subject: subject,
+                   body: body,
+                   content_type: 'text/html')
+            else
+              mail(to: to_email,
+                   reply_to: admin.email,
+                   bcc: admin.email,
+                   subject: subject,
+                   body: body,
+                   content_type: "text/html")
+            end
+    email.deliver
+  end
 
 
   def replace_text body

@@ -34,24 +34,16 @@ class Booking < ActiveRecord::Base
     bookings_schools_untouched.each do |booking|
       EmailMailer.school_email(booking, first_user, 'new')
     end
-    bookings_instructors_untouched = Booking.where(instructor1_available: nil)
-    bookings_instructors_untouched.each do |booking|
+
+    bookings_instructors_untouched = BookingInstructor.where(available: nil)
+    bookings_instructors_untouched.each do |booking_instructor|
+      booking = Booking.find(booking_instructor.booking_id)
       EmailMailer.instructor_email(booking, first_user)
     end
 
-    bookings_instructors_untouched = Booking.where(instructor2_available: nil)
-    bookings_instructors_untouched.each do |booking|
-      EmailMailer.instructor_email(booking, first_user)
-    end
-
-    bookings_admin_instructor_warning = Booking.where(instructor1_available: nil).where("created_at < ?", 2.days.ago)
-    bookings_admin_instructor_warning.each do |booking|
-      EmailMailer.admin_instructor_warning(booking, first_user)
-    end
-     
-    bookings_admin_instructor_warning = Booking.where(instructor2_available: nil).where("created_at < ?", 2.days.ago)
-    bookings_admin_instructor_warning.each do |booking|
-      EmailMailer.admin_instructor_warning(booking, first_user)
+    bookings_admin_instructor_warning = BookingInstructor.where(available: nil).where("created_at < ?", 2.days.ago)
+    bookings_admin_instructor_warning.each do |booking_instructor|
+      EmailMailer.admin_instructor_warning(booking_instructor, first_user)
     end
 
     bookings_admin_school_warning = Booking.where(required_bikes: nil).where("start_time < ?", 10.days.from_now).where("start_time > ?", DateTime.now)
