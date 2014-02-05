@@ -51,5 +51,8 @@
     .field
       = f.label :booking_asset_array, "Booking documents"
       = f.file_field :booking_asset_array, :multiple =>:true
+    .field
+      = f.label :note, :class => 'control-label'
+      = f.text_area :note, :class => 'field span6'
   .actions
     = f.submit "Save"

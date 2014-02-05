@@ -72,7 +72,7 @@ class SchoolsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def school_params
-    params.require(:school).permit(:school_name, :address_line_1, :address_line_2, :city, :postcode, :telephone_number, :teacher_name, :email)
+    params.require(:school).permit(:school_name, :address_line_1, :address_line_2, :city, :postcode, :telephone_number, :teacher_name, :email, :note)
   end
 
   def sort_column

@@ -18,5 +18,9 @@
   .field
     = f.label :post_code
     = f.text_field :post_code
+  .control-group
+    = f.label :note, :class => 'control-label'
+    .controls
+      = f.text_area :note, :class => 'field span6'
   .actions
     = f.submit 'Save'

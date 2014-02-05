@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122123522) do
+ActiveRecord::Schema.define(version: 20140205163223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20140122123522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "uuid"
+    t.text     "note"
   end
 
   add_index "bookings", ["school_id"], name: "index_bookings_on_school_id", using: :btree
@@ -66,6 +67,7 @@ ActiveRecord::Schema.define(version: 20140122123522) do
     t.string   "post_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "note"
   end
 
   create_table "schools", force: true do |t|
@@ -79,6 +81,7 @@ ActiveRecord::Schema.define(version: 20140122123522) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "note"
   end
 
   create_table "users", force: true do |t|
