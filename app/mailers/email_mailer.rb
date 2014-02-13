@@ -12,7 +12,7 @@ class EmailMailer < ActionMailer::Base
   def school_email(booking, admin, host)
     attachments_array = Array.new
     booking.booking_assets.each do |asset|
-      attachments[asset.booking_file_file_name.to_s] = File.read(asset.booking_file.path) #open("http://#{host}#{asset.booking_file.url}").read 
+      attachments[asset.booking_file_file_name.to_s] = open(asset.booking_file.url).read 
     end
     @school = booking.school
     @booking = booking

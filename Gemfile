@@ -12,6 +12,7 @@ gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem 'bootstrap-datepicker-rails'
 gem "paperclip", "~> 3.0"
+gem 'aws-sdk'
 
 group :development, :test do
   gem 'zeus'
