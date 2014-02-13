@@ -6,6 +6,8 @@ gem 'rails', '4.0.2'
 gem 'devise'
 gem 'haml-rails'
 gem 'pg'
+gem 'draper'
+gem 'virtus'
 
 gem "therubyracer"
 gem "less-rails"
