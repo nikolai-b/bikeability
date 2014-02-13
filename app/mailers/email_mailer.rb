@@ -25,7 +25,7 @@ class EmailMailer < ActionMailer::Base
     booking_instructors = @booking.booking_instructors.where(available: nil)
     booking_instructors.each do |booking_instructor|
       @instructor = booking_instructor.instructor
-      @confirm_url = booking_url(booking) + '/instructors/' + @instructor.id.to_s + '/edit'
+      @instructor_confirm_url = booking_url(booking) + '/instructors/' + @instructor.id.to_s + '/edit'
       send_email(@instructor.email, admin, "Bikeability at #{@school.school_name}", 'instructor')
     end
   end
@@ -49,10 +49,19 @@ class EmailMailer < ActionMailer::Base
   end
 
   private
-  
+
   def send_email(to_email, admin, subject, template_name, attachments=nil)
     email_template = EmailTemplate.find_by(template_name: template_name)
-    body = replace_text email_template.body
+    attributes = {
+      school: @school, 
+      booking: @booking,
+      instructor: @instructor,
+      instructor_confirm_url: @instructor_confirm_url,
+      body: email_template.body
+    }
+
+    body = EmailTemplateDecorator.new(attributes).body
+
     email = if to_email == admin.email
               mail(to: to_email,
                    subject: subject,
@@ -69,19 +78,5 @@ class EmailMailer < ActionMailer::Base
     email.deliver
   end
 
-
-  def replace_text body
-    EmailTemplate.replace_text_holders.each do |text, replacement_string|
-      regex = /\<#{text}\>/
-      begin
-        replacement = eval(replacement_string) 
-      rescue
-
-      else
-        body = body.gsub(regex, replacement.to_s)
-      end
-    end
-    body
-  end
 
 end

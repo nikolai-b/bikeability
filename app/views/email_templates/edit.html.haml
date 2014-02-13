@@ -6,7 +6,7 @@
 Any text inside &lt; &gt; will be replaced in the email.  Valid replacements are:
 <br/>
 &lt;booking_link:any link text&gt;
-- EmailTemplate.replace_text_holders.keys.each do |replace_text|
+- EmailTemplateDecorator::MAPPINGS.each do |replace_text|
   = "<#{replace_text}> "
 <br/><br/>
 = link_to 'Show', @email_template
