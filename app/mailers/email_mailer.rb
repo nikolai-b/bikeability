@@ -57,14 +57,14 @@ class EmailMailer < ActionMailer::Base
               mail(to: to_email,
                    subject: subject,
                    body: body,
-                   content_type: 'text/html')
+                   content_type: 'text/html; charset=UTF-8')
             else
               mail(to: to_email,
                    reply_to: admin.email,
                    bcc: admin.email,
                    subject: subject,
                    body: body,
-                   content_type: "text/html")
+                   content_type: "text/html; charset=UTF-8")
             end
     email.deliver
   end
